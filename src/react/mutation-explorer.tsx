@@ -221,6 +221,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
   const updateSequence = (next: string) => {
     if (controlledSequence === undefined) setInternalSequence(next);
     onSequenceChange?.(next);
+    if (mode === "none") updateEdit({ start: 0, deleteCount: 0, insert: "" }, "none");
     setExportMessage("");
   };
   const selectPosition = (position: number) => {
@@ -229,7 +230,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
   };
   const changeMode = (next: EditMode) => {
     setMode(next);
-    if (next === "none") { updateEdit({ start: Math.min(edit.start, normalized.length), deleteCount: 0, insert: "" }, next); return; }
+    if (next === "none") { updateEdit({ start: 0, deleteCount: 0, insert: "" }, next); return; }
     const start = Math.min(edit.start, Math.max(0, normalized.length - (next === "insert" ? 0 : 1)));
     updateEdit({ start, deleteCount: next === "insert" ? 0 : Math.min(Math.max(1, edit.deleteCount), normalized.length - start), insert: next === "delete" ? "" : edit.insert || "A" }, next);
   };
@@ -279,8 +280,8 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
         <label htmlFor={`${id}-type`}>Edit type<select id={`${id}-type`} value={mode} onChange={event => changeMode(event.target.value as EditMode)}>
           <option value="none">No edit</option><option value="replace">Replace bases</option><option value="insert">Insert bases</option><option value="delete">Delete bases</option>
         </select></label>
-        <label htmlFor={`${id}-position`}>{mode === "insert" ? "Insert before base" : "Start at base"}<input id={`${id}-position`} type="number" min={1}
-          max={Math.max(1, normalized.length + (mode === "insert" || mode === "none" ? 1 : 0))} step={1} value={edit.start + 1} disabled={!normalized.length && mode === "none"}
+        <label htmlFor={`${id}-position`}>{mode === "none" ? "Selected base" : mode === "insert" ? "Insert before base" : "Start at base"}<input id={`${id}-position`} type="number" min={1}
+          max={Math.max(1, normalized.length + (mode === "insert" ? 1 : 0))} step={1} value={edit.start + 1} disabled={!normalized.length && mode === "none"}
           onChange={event => updateEdit({ ...edit, start: Number(event.target.value) - 1 })} /></label>
         {mode !== "insert" && mode !== "none" && <label htmlFor={`${id}-count`}>{mode === "delete" ? "Bases to delete" : "Bases to replace"}<input id={`${id}-count`} type="number" min={1} step={1}
           max={Math.max(1, normalized.length - edit.start)} value={edit.deleteCount}

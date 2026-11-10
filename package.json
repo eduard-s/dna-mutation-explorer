@@ -1,7 +1,7 @@
 {
   "name": "dna-mutation-explorer",
-  "version": "0.3.0",
-  "description": "Compare coding DNA edits, codons, and protein sequences with a TypeScript core and a React component.",
+  "version": "0.4.0",
+  "description": "An interactive DNA damage and protection lab, with molecular animations, a TypeScript engine, and React components.",
   "type": "module",
   "license": "MIT",
   "author": "Eduard Smirnov",
@@ -21,7 +21,10 @@
     "translation",
     "bioinformatics",
     "react",
-    "typescript"
+    "typescript",
+    "dna-replication",
+    "simulation",
+    "education"
   ],
   "sideEffects": [
     "**/*.css"
@@ -45,6 +48,10 @@
       "types": "./dist/lessons/index.d.ts",
       "import": "./dist/lessons/index.js"
     },
+    "./playground": {
+      "types": "./dist/playground/index.d.ts",
+      "import": "./dist/playground/index.js"
+    },
     "./styles.css": "./dist/styles.css",
     "./package.json": "./package.json"
   },
@@ -57,7 +64,7 @@
   ],
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 4175",
-    "build": "tsc -p tsconfig.build.json && node scripts/copy-styles.mjs",
+    "build": "node scripts/clean-dist.mjs && tsc -p tsconfig.build.json && node scripts/copy-styles.mjs",
     "build:demo": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 4175",
     "typecheck": "tsc --noEmit",

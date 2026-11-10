@@ -1,6 +1,6 @@
 # Integration
 
-## React
+## React damage lab
 
 Install the package and the React dependencies.
 
@@ -11,15 +11,206 @@ npm install dna-mutation-explorer react react-dom
 Import the component and the stylesheet.
 
 ```tsx
-import { MutationExplorer } from "dna-mutation-explorer/react";
+import { DnaDamageLab } from "dna-mutation-explorer/react";
 import "dna-mutation-explorer/styles.css";
 
 export function SequenceLesson() {
-  return <MutationExplorer />;
+  return <DnaDamageLab seed={42} />;
 }
 ```
 
-The component uses a synthetic sequence by default.
+`DnaDamageLab` is the main component.
+It uses E. coli as the default repair context.
+UV, oxidants, and heat start at low relative levels.
+The controls change exposure and protection independently.
+The lab does not calculate calibrated doses or survival probabilities.
+
+Supply initial settings for a specific lesson.
+
+```tsx
+<DnaDamageLab
+  seed={42}
+  initialSpecies="bare"
+  initialExposures={{ uv: 0, oxidants: 0, heat: 0 }}
+  initialProtectors={{ antioxidants: 0, repair: 0 }}
+/>
+```
+
+The `initial*` props take effect only at mount.
+A change to `sequence` or `seed` recreates the sample with those original settings.
+Reset restores those settings and the current sequence and seed.
+It keeps the pause state and selected mechanism.
+Keep `sequence` stable when you collect snapshots.
+That prop is a reset input, not a controlled live sequence.
+
+Without an explicit seed, the component keeps one seed for the current mount.
+Invalid input shows an error and disables the controls.
+Reduced motion starts the lab paused.
+Manual pulses and repair remain available while paused.
+Hidden or offscreen canvases stop animation and release pointer input.
+The display resumes when visible unless the user paused it.
+
+## Damage callbacks
+
+Use `onChange` to receive damage snapshots.
+
+```tsx
+import { DnaDamageLab } from "dna-mutation-explorer/react";
+import type { DamageSnapshot } from "dna-mutation-explorer/playground";
+
+function receiveDamage(snapshot: DamageSnapshot) {
+  console.log(snapshot.activeLesions, snapshot.repaired, snapshot.neutralized);
+}
+
+<DnaDamageLab seed={42} onChange={receiveDamage} />;
+```
+
+A snapshot contains the current species, sequence, exposure levels, protector levels, and damage counters.
+It does not include atom coordinates or a complete event history.
+Lesion markers do not change the ordinary sequence letters.
+The callback receives the initial state and changed serialized snapshots.
+Animation samples occur about every 180 milliseconds.
+Pointer samples occur about every 100 milliseconds.
+Keep the callback fast.
+
+## Damage-lab colors
+
+Add a class to the component root.
+
+```tsx
+<DnaDamageLab className="custom-lab" />
+```
+
+Set the lab CSS properties on that class.
+
+```css
+.dnad-lab.custom-lab {
+  --dnad-accent: #6f4b40;
+  --dnad-sage: #6f897c;
+}
+```
+
+| Property | Default | Role |
+| --- | --- | --- |
+| `--dnad-surface` | `#dfe5dc` | Main surface color. |
+| `--dnad-paper` | `#eff2ed` | Light surface color. |
+| `--dnad-ink` | `#303832` | Main text and strand color. |
+| `--dnad-accent` | `#785448` | Focus and exposure color. |
+| `--dnad-sage` | `#6f897c` | Protection color. |
+| `--dnad-clay` | `#a67769` | Lesion color. |
+| `--dnad-rule` | A 24% ink mix | Rule and control border color. |
+
+The canvases are transparent.
+The component reads the color properties for its canvas theme.
+
+## Copy-and-repair utility
+
+Use `DnaPlayground` for the separate DNA copy model.
+
+```tsx
+import { DnaPlayground } from "dna-mutation-explorer/react";
+import "dna-mutation-explorer/styles.css";
+
+<DnaPlayground seed={42} />;
+```
+
+The component starts with continuous motion and no copy.
+The default synthetic sequence has 24 bases.
+Use `sequence` for 6–64 known DNA bases.
+Use `seed` for repeatable random choices.
+
+A change to `sequence` or `seed` recreates the sample.
+Reset restores the current props and keeps the pause state.
+Without an explicit seed, the component keeps one seed for the current mount.
+The `sequence` prop is a reset input, not a controlled live sequence.
+Keep that prop stable when you collect snapshots.
+
+Invalid sequence input shows an error and disables the controls.
+Reduced motion starts the display paused.
+Copy actions complete immediately while paused or reduced motion is active.
+Hidden or offscreen canvases stop animation and release pointer input.
+The display resumes when visible unless the user paused it.
+
+## Copy snapshots
+
+Use `onChange` to receive model readouts and sequence data.
+
+```tsx
+import { DnaPlayground } from "dna-mutation-explorer/react";
+import type { DnaSnapshot } from "dna-mutation-explorer/playground";
+
+function receiveSnapshot(snapshot: DnaSnapshot) {
+  console.log(snapshot.sequence, snapshot.mismatches, snapshot.changes);
+}
+
+<DnaPlayground seed={42} onChange={receiveSnapshot} />;
+```
+
+The callback receives the initial state and changed serialized snapshots.
+Animation updates occur about every 180 milliseconds.
+Pointer samples occur about every 90 milliseconds.
+Keep the callback fast.
+
+`copySequence` contains the full planned daughter sequence before the animation completes.
+Use `copied` for the number of visible positions.
+Use `copyComplete` to identify a complete copy.
+The snapshot does not contain node positions.
+
+## Copy-utility colors
+
+Add a class to the component root.
+
+```tsx
+<DnaPlayground className="custom-dna" />
+```
+
+Set the playground CSS properties on that class.
+
+```css
+.dnap-playground.custom-dna {
+  --dnap-accent: #6f4b40;
+  --dnap-sage: #6f897c;
+}
+```
+
+| Property | Default | Role |
+| --- | --- | --- |
+| `--dnap-surface` | `#dfe5dc` | Main surface color. |
+| `--dnap-paper` | `#eff2ed` | Light surface color. |
+| `--dnap-ink` | `#303832` | Main text and strand color. |
+| `--dnap-accent` | `#785448` | Focus and selection color. |
+| `--dnap-sage` | `#6f897c` | New-strand color. |
+| `--dnap-clay` | `#a67769` | Error and change color. |
+
+The canvas is transparent.
+The component reads those properties for its canvas theme.
+
+## Optional advanced editor
+
+Import `MutationExplorer` for exact sequence edits and protein translation.
+Keep it in an optional section when the canvas is the main experience.
+
+```tsx
+import { useState } from "react";
+import { DnaDamageLab, MutationExplorer } from "dna-mutation-explorer/react";
+import "dna-mutation-explorer/styles.css";
+
+export function DnaPage() {
+  const [showExplorer, setShowExplorer] = useState(false);
+
+  return (
+    <>
+      <DnaDamageLab />
+      <details onToggle={(event) => setShowExplorer(event.currentTarget.open)}>
+        <summary>Open the detailed sequence editor</summary>
+        {showExplorer && <MutationExplorer />}
+      </details>
+    </>
+  );
+}
+```
+
+The advanced editor uses a synthetic coding sequence by default.
 Supply `defaultSequence` and `defaultEdit` for a different initial example.
 If a custom sequence has no edit props, the component starts with "No edit".
 The built-in example also starts with no edit and highlights base 5.
@@ -33,7 +224,7 @@ The helix is a static diagram of the selected region.
 Each mouse action replaces the previous trial against the same reference sequence.
 The `onEditChange` callback receives the resulting edit.
 The reference sequence does not change after a trial.
-The public props stay the same in version 0.3.0.
+The `MutationExplorer` props stay the same in version 0.4.0.
 
 The chain preview shows the first 24 protein symbols and the full amino-acid count.
 The sequence comparison and export include the rest.
@@ -42,9 +233,9 @@ Open "Edit a custom sequence or exact positions" to use the manual sequence and 
 Use those controls or the codon reference for multi-base tasks.
 An input error opens the manual controls automatically.
 
-## Guided challenges
+## Advanced challenges
 
-The component shows eight guided challenges by default.
+`MutationExplorer` shows eight guided challenges by default.
 Each challenge has a goal, explanations, hints, and feedback.
 The component keeps completion progress only in memory.
 A reload or remount resets that progress.
@@ -60,7 +251,7 @@ The callback fires once for each ID per mounted component.
 The reset controls and presets keep the completed IDs until the component unmounts.
 See the [teaching guide](TEACHING.md) to use the lessons API without React.
 
-## Colors
+## Advanced colors
 
 Add a class to the component root.
 
@@ -92,7 +283,7 @@ Set the CSS properties on that class.
 The component root has a transparent background.
 The stylesheet prefixes component classes with `dme-`.
 
-## Controlled state
+## Control the advanced editor
 
 Pass `sequence` and `onSequenceChange` to control the reference sequence.
 Pass `edit` and `onEditChange` to control the edit.
@@ -136,10 +327,10 @@ Put the component in a client component file.
 ```tsx
 "use client";
 
-import { MutationExplorer } from "dna-mutation-explorer/react";
+import { DnaDamageLab } from "dna-mutation-explorer/react";
 
 export function DnaExplorer() {
-  return <MutationExplorer />;
+  return <DnaDamageLab />;
 }
 ```
 
@@ -179,7 +370,7 @@ The package does not send sequence data to a server.
 It does not fetch external sequences or store sequences in browser storage.
 The host application controls its own network requests and callbacks.
 
-The component can export edited DNA and protein sequences as FASTA files.
+`MutationExplorer` can export edited DNA and protein sequences as FASTA files.
 The protein FASTA file omits the terminal stop symbol.
 The analysis JSON keeps that symbol in `Translation.protein`.
 It can also export the analysis as JSON.

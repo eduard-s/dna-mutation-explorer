@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.4.0
+
+- Add `DnaDamageLab` as the main damage-and-protection experience.
+- Add UV, X-rays, heat, electric field, and oxidant exposure channels.
+- Add UV dimers, strand breaks, and oxidative base lesions.
+- Add separate antioxidants, UV filters, X-ray shields, repair, and repair light.
+- Add schematic atomic explanations for excitation, ionization, and reactive oxygen.
+- Add qualitative species contexts without calibrated survival comparisons.
+- Preserve the sequence and existing damage when the species context changes.
+- Keep the copy-and-repair utility and advanced sequence editor separate.
+- Add `DnaPlayground` as a continuous canvas experience.
+- Add Grab, Unzip, and Mutate brushes for flexible DNA strands.
+- Add accurate copies and copies with one deliberate new-strand error.
+- Add repair for new-strand mismatches.
+- Keep mismatch counts separate from stable sequence changes.
+- Add a selected next-generation branch with a preserved original baseline.
+- Add a headless playground engine and snapshot callbacks.
+- Complete copy actions immediately during pause or reduced motion.
+- Keep `MutationExplorer` and the sequence-analysis API for advanced use.
+
 ## 0.3.0
 
 - Add direct DNA tools for mouse, touch, and keyboard input.

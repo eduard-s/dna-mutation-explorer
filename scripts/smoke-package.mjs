@@ -25,7 +25,15 @@ try {
     import { analyzeCodingEdit } from 'dna-mutation-explorer';
     import { translateDna } from 'dna-mutation-explorer/core';
     import { CHALLENGES } from 'dna-mutation-explorer/lessons';
+    import { createDamageLab, pulseDamage, getDamageMetrics, setDnaProtectors } from 'dna-mutation-explorer/playground';
     if (CHALLENGES.length !== 8) throw new Error('The lesson export must contain eight challenges.');
+    const lab = createDamageLab(600, 420, { species: 'bare', protectors: { repair: 0 } });
+    lab.dna.paused = true;
+    pulseDamage(lab, 'uv');
+    if (getDamageMetrics(lab).dimers !== 1) throw new Error('A UV pulse must create a same-strand dimer.');
+    setDnaProtectors(lab, { uvFilter: 1 });
+    pulseDamage(lab, 'uv');
+    if (getDamageMetrics(lab).dimers !== 1 || getDamageMetrics(lab).blocked !== 1) throw new Error('The UV filter must block another UV lesion.');
     const result = analyzeCodingEdit('ATGGAACTGTAA', { start: 5, deleteCount: 1, insert: 'G' });
     process.stdout.write(JSON.stringify({ consequence: result.consequence, protein: translateDna('ATGGAACTGTAA').protein }));
   `));
@@ -35,11 +43,12 @@ try {
     const markup = node(`
       import React from 'react';
       import { renderToString } from 'react-dom/server';
-      import { MutationExplorer } from 'dna-mutation-explorer/react';
-      process.stdout.write(renderToString(React.createElement(MutationExplorer)));
+      import { MutationExplorer, DnaDamageLab, DnaPlayground } from 'dna-mutation-explorer/react';
+      process.stdout.write(renderToString(React.createElement(React.Fragment, null, React.createElement(DnaDamageLab), React.createElement(DnaPlayground), React.createElement(MutationExplorer))));
     `);
     assert(markup.includes("DNA"));
     assert(markup.includes("<button"));
+    assert(markup.includes("DNA damage and protection lab"));
     console.log(`React ${version}: the component renders on the server.`);
   }
   console.log(`Package smoke tests passed. ${paths.length} files, ${pack.size} compressed bytes.`);

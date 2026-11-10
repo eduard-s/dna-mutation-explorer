@@ -1,13 +1,239 @@
 # Teaching guide
 
-## Mouse playground
+## Damage and protection lab
+
+Expose DNA to different conditions.
+Add protection.
+Examine which damage forms and which protection acts on it.
+
+`DnaDamageLab` is the main component.
+It shows exposure particles, DNA lesions, protection events, and a schematic atomic view.
+The DNA letters stay the same when a lesion marker appears.
+The lab has no rounds or score.
+
+Before a comparison, set unrelated exposures to zero.
+Change one factor or protector at a time.
+Use pause and manual pulses for direct examples.
+Use reset for a fresh sample.
+
+| Control | Action |
+| --- | --- |
+| Grab | Drag the DNA to bend or stretch its illustrative geometry. |
+| Expose | Apply the selected factor near the pointer. |
+| Repair | Remove a nearby lesion marker. |
+| Pulse | Apply or emit one action for the selected factor. |
+| Pause | Stop motion and automatic exposure or repair steps. |
+| Reset | Restore the initial sample and settings. |
+
+Select a factor name to change the atomic explanation.
+The sliders control continuous exposure or protection.
+The Pulse button applies a separate direct action.
+Paused exposure pulses act immediately.
+
+Focus the DNA canvas to use its keyboard controls.
+Press G, E, or R to select Grab, Expose, or Repair.
+Use the arrow keys to select a base pair.
+Press Space to apply the selected tool.
+In Grab, Space holds or releases the DNA, and the arrow keys pull it.
+Press Enter to pause or resume.
+Press Escape to release the DNA.
+
+| Factor | What to examine |
+| --- | --- |
+| UV | A dimer joins neighboring `C` or `T` bases on one strand. |
+| X-rays | Ionization and reactive oxygen can produce backbone breaks. |
+| Heat | More motion and open base pairs without automatic chemical lesions. |
+| Electric field | Motion of the negatively charged backbone without automatic radiation lesions. |
+| Oxidants | A reactive-oxygen particle can mark a `G` base as oxidized. |
+
+## Match protection to the mechanism
+
+| Protector | Model action |
+| --- | --- |
+| UV filter | Attenuate incoming UV particles. |
+| X-ray shield | Attenuate incoming X-ray particles. |
+| Antioxidants | Intercept reactive oxygen. |
+| Repair | Remove existing lesion markers through the selected repair context. |
+| Repair light | Reverse dimers through E. coli photolyase. |
+
+Antioxidants do not stop direct UV photons or the direct X-ray path in this model.
+They do not remove an existing lesion.
+Filters prevent selected incoming events but do not repair earlier damage.
+New exposure can cause more lesions after repair.
+
+The manual repair brush represents external repair activity.
+It also works on Bare DNA.
+Bare DNA has no automatic cellular repair.
+
+## Read the atomic view
+
+The atomic view explains the selected factor or event.
+UV illustrates electronic excitation and a same-strand dimer.
+X-rays illustrate electron ejection and a direct or reactive-oxygen damage path.
+Heat illustrates motion and loss of pairing.
+The electric field illustrates a force on the charged backbone.
+
+Electron clouds and paths are schematic.
+They do not show literal orbits or a quantum calculation.
+Read the event explanation with the lesion state.
+
+## Compare species contexts
+
+The species contexts keep the same DNA and existing lesions.
+They change qualitative repair settings.
+They do not calculate survival or rank biological resistance.
+
+Bare DNA has no intrinsic cellular repair.
+E. coli includes photolyase under repair light.
+Human cells and D. radiodurans have no photolyase in this model.
+D. radiodurans illustrates stronger break repair and the importance of protein protection.
+Its DNA still takes damage.
+
+## Use the damage component
+
+Import the component and the stylesheet.
+
+```tsx
+import { DnaDamageLab } from "dna-mutation-explorer/react";
+import "dna-mutation-explorer/styles.css";
+
+export function DamageLesson() {
+  return (
+    <DnaDamageLab
+      seed={42}
+      onChange={(snapshot) => {
+        console.log(snapshot.activeLesions, snapshot.repaired);
+      }}
+    />
+  );
+}
+```
+
+The controls use relative levels.
+The model does not calculate calibrated doses, clinical risk, or survival.
+Read the [model guide](MODEL.md) for mechanisms, sources, and limits.
+
+## Copy-and-repair utility
+
+Use `DnaPlayground` for this separate utility.
+
+Drag the DNA to bend it.
+Select Unzip to separate nearby pairs.
+Make a copy.
+Add an error.
+Repair it, or copy again to see which branch keeps it.
+
+The copy utility has no rounds, score, or target sequence.
+The DNA moves continuously until pause.
+The letters identify bases, and each visible rung is a base pair.
+The source and copy stay visible together.
+
+| Control | What it does |
+| --- | --- |
+| Grab | Move nearby DNA with the pointer. |
+| Unzip | Separate nearby pairs briefly without a sequence change. |
+| Mutate | Change a source pair or a permitted new-strand base. |
+| Copy DNA | Make a copy with correct base pairs. |
+| Copy with mistake | Make a copy with one wrong new base. |
+| Repair copy | Correct visible mismatches on the new strand. |
+| Next generation | Continue the branch that keeps the new upper strand. |
+| Pause | Stop model motion. |
+| Reset | Restore the initial model. |
+
+## Repair before another copy
+
+1. Press "Copy with mistake".
+2. Let the copy finish.
+3. Examine the mismatched pair.
+4. Press "Repair copy".
+5. Press "Next generation".
+
+The repair uses the old partner to correct the new base.
+The next tracked copy can keep the original sequence.
+
+## Continue without repair
+
+1. Reset the model.
+2. Press "Copy with mistake".
+3. Let the copy finish.
+4. Press "Next generation" without repair.
+
+The new upper strand becomes the next template.
+Its new partner makes a matching pair.
+The mismatch count returns to zero, while the sequence-change count can increase.
+Repair cannot identify that stable change from a mismatch because the pair now matches.
+
+The display selects one branch for this experiment.
+Other descendants can have a different sequence.
+The branch represents descendant body cells.
+The model does not show parent-to-child inheritance.
+
+## Read the model states
+
+| State | Meaning |
+| --- | --- |
+| Old partner | The template that the new strand copies. |
+| Mismatch | Two letters that do not form an `A`–`T` or `G`–`C` pair. |
+| Sequence change | A current parent base that differs from the original ancestry baseline. |
+| Generation | One successful continuation through the selected copy. |
+
+A source edit changes both bases of a pair immediately.
+A daughter edit changes only the new upper base.
+The old daughter partner stays unchanged.
+Later source edits do not change an existing copy.
+The Mutate brush is a deliberate edit, not a physical damage model.
+
+Pause and reduced motion stop the animated process.
+Copy actions still complete immediately in those states.
+The forces, motion, and time are illustrative.
+Read the [model guide](MODEL.md) for sources and limits.
+
+## Use the continuous component
+
+Import the component and the stylesheet.
+
+```tsx
+import { DnaPlayground } from "dna-mutation-explorer/react";
+import "dna-mutation-explorer/styles.css";
+
+export function DnaLesson() {
+  return (
+    <DnaPlayground
+      seed={42}
+      onChange={(snapshot) => {
+        console.log(snapshot.mismatches, snapshot.changes);
+      }}
+    />
+  );
+}
+```
+
+The sequence contains 6–64 known DNA bases.
+The default synthetic sequence contains 24 bases.
+The data stays in the browser.
+
+## Keyboard controls
+
+Focus the canvas with Tab.
+
+| Key | Action |
+| --- | --- |
+| Left Arrow or Right Arrow | Select a base pair. |
+| Up Arrow or Down Arrow | Select the source or visible copy. |
+| Space | Apply Unzip or Mutate, or hold and release with Grab. |
+| Arrow keys during a grab | Move the held point. |
+| `G`, `U`, or `M` | Select Grab, Unzip, or Mutate. |
+| Enter | Pause or resume motion. |
+| Escape | Release the held point. |
+
+## Advanced direct editor
 
 A mutation is a change to a DNA sequence.
 This playground shows how DNA letter changes affect codons and the translated amino-acid sequence.
 It supports lessons about sequence consequences.
 It does not predict health effects or protein function.
 
-The mouse playground appears before the guided challenges and forms.
+The direct editor in `MutationExplorer` appears before its guided challenges and forms.
 The built-in example starts with no edit at highlighted base 5.
 The original DNA stays unchanged during each trial.
 The original and edited protein chains show the current result.
@@ -46,9 +272,9 @@ Use those controls or the codon reference for multi-base replacements.
 The original sequence remains the reference for those edits.
 An input error opens the manual controls automatically.
 
-## Guided challenges
+## Eight advanced challenges
 
-The React component includes eight guided challenges.
+`MutationExplorer` includes eight guided challenges.
 Each challenge supplies a sequence, an initial edit, a goal, an explanation, and hints.
 The component compares the current result with the challenge rules.
 The feedback describes the sequence result.
@@ -75,7 +301,7 @@ A preset, a global reset, or a change to the custom reference exits the active c
 These actions keep completed challenge IDs.
 A task reset also keeps completed challenge IDs.
 
-## Terms in the interface
+## Advanced sequence terms
 
 | Term | Meaning in this model |
 | --- | --- |
@@ -89,7 +315,7 @@ A task reset also keeps completed challenge IDs.
 | Frameshift | A reading-frame change when the net length change is not a multiple of three. |
 | Ambiguous base | An IUPAC symbol that can represent more than one DNA base. |
 
-## Use the component
+## Use the advanced component
 
 Import the component and its stylesheet.
 
@@ -177,7 +403,7 @@ An analysis with a different reference also gives `completed: false`.
 The optional `targetProtein` field gives context for selected tasks.
 Each challenge has its own completion rule.
 
-## Repair challenges
+## Advanced repair challenge
 
 A repair challenge starts with a damaged synthetic reference.
 The repair-frame challenge includes one extra `C` at base 7.
@@ -186,6 +412,8 @@ Different DNA with the same translated protein does not complete this challenge.
 
 The analysis labels describe changes relative to the damaged reference.
 A repair can therefore have a `missense` or `frameshift` label.
+This exercise uses an exact sequence edit.
+It does not invoke the playground's mismatch-repair action.
 
 Completion does not prove that the protein has a specific function.
 It does not identify a treatment or a natural repair mechanism.

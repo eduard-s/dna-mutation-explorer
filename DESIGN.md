@@ -10,43 +10,43 @@ Use Arial for text and headings.
 Use Courier New for sequences, metadata, and controls.
 Keep the interface light for a reader at a desk in daylight.
 
-Use thin rules to separate the sequence comparison, controls, and result.
+Use thin rules to separate the canvas, controls, and readouts.
 Use no cards, shadows, or gradients.
 Keep labels visible beside their controls.
 Give each control a target of at least 44 pixels.
 
-Put controls below the sequence comparison on narrow screens.
-Keep horizontal sequence scroll inside a labeled region when necessary.
-Use a responsive sequence window for long input.
+Put a large DNA damage canvas first.
+Show the DNA, exposure particles, and protection events in the same field.
+Use flexible double-helix geometry with letters and visible base pairs.
+Let the pointer move DNA or apply a selected factor.
+Keep pointer forces local and bounded.
 
-Put the DNA playground first in the component.
-Use native buttons for the coding-strand letters.
-Give each button the selected mutation action.
-Use the same action for click, tap, Enter, and Space.
-Each tool works without a drag action.
+Keep exposure and protection controls visible near the canvas.
+Give each factor a native control and a relative value.
+Show species context without a resistance score.
+Keep pause and reset visible.
+Put controls in document flow on phones.
+Preserve normal document scroll and pinch zoom.
 
-Put "Swap a letter", "Cut one base", "Cut one codon", and "Add a base" near the coding strand.
-Keep the base palette visible beside the insertion tool.
-Show "Reset mutation" near the tools.
-Show the original and edited protein chains near the DNA.
-Use full amino-acid names in the focused-codon explanation.
+Give dimers, strand breaks, and oxidized bases different states.
+Use letters and labels with color.
+Keep readouts about actual model state.
+Use no scores, rounds, or win screens in the main playground.
 
-Cap each chain preview at 24 symbols.
-Keep the full amino-acid count visible.
-Show the truncation note when more symbols exist.
-Use the sequence comparison and export for the rest.
+Show the selected mechanism in a schematic atomic view.
+Use excitation, electron ejection, reactive oxygen, and bond changes as separate events.
+Do not draw electron paths as literal planetary orbits.
+Label the atomic view as schematic.
+Keep stage descriptions brief and specific.
 
-Highlight the default base without a mutation.
-Show the one-edit rule near the tools.
-Put the custom sequence and exact-position form in a native details element.
-Use "Edit a custom sequence or exact positions" as its summary.
-Keep guided challenges after the playground.
+Keep the advanced `MutationExplorer` in an optional section.
+Its detailed sequence view uses a responsive window for long input.
+Its chain preview keeps the existing 24-symbol limit and full counts.
+Its export includes the full result.
 
-Link the selected DNA base with its codon and amino acid.
-A compact helix can show this same selection.
-The helix must show useful sequence information.
+Keep `DnaPlayground` as an optional copy-and-repair utility.
 
 Honor reduced-motion preferences.
 Use semantic HTML, keyboard controls, visible focus, and concise status messages.
-Prefix component selectors with dme to prevent host-page conflicts.
+Prefix component selectors to prevent host-page conflicts.
 Expose CSS custom properties for host colors.

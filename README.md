@@ -1,43 +1,42 @@
 # DNA mutation explorer
 
-Change DNA letters and see the effect on the protein sequence.
-Compare the original and edited DNA, codons, and amino acids.
+Expose DNA to UV, X-rays, heat, an electric field, or oxidants.
+Add protection.
+Examine which damage forms and which protection acts on it.
+Use the atomic view to examine schematic electron excitation, ionization, and reactive oxygen.
+
 Use the TypeScript core without a browser.
-Embed the React component in a scientific website or a lesson.
+Embed `DnaDamageLab` in a scientific website or a lesson.
+Use `DnaPlayground` for the separate copy-and-repair utility.
+Use `MutationExplorer` for the advanced sequence editor.
 
 [Demo](https://esmirnov.ai/dna-mutation-explorer/) · [API](docs/API.md) · [Model](docs/MODEL.md) · [Teaching](docs/TEACHING.md) · [Integration](docs/INTEGRATION.md)
 
 ## Features
 
-- Swap, cut, or add DNA letters with the mouse, touch, or keyboard.
-- Compare the reference and edited DNA, RNA codons, and amino acids.
-- Examine synonymous changes, missense changes, stop changes, and frameshifts.
-- Read full amino-acid names for the selected codon.
-- Learn the terms with explanations and tooltips.
-- Solve eight guided challenges with hints and sequence-based feedback.
-- Use the codon reference to choose a three-base replacement.
-- Export the edited DNA and protein sequence.
+- Apply five independent exposure factors to flexible DNA.
+- Compare UV dimers, strand breaks, and oxidized bases.
+- Examine schematic atomic events for each factor.
+- Add antioxidants, radiation filters, and repair activity as separate protectors.
+- Compare qualitative repair contexts without a survival score.
+- Keep the same sequence and existing damage when the species context changes.
+- Use the copy-and-repair utility for mismatches and a selected descendant branch.
+- Use the advanced editor for codons, protein sequences, exact edits, and export.
 - Keep the sequence data in the browser.
 
-## Try the playground
+## Try the lab
 
-1. Select "Swap a letter".
-2. Click a letter in the DNA coding strand.
-3. Compare the edited protein with the original protein.
-4. Select another tool to cut or add a base.
-5. Click a DNA letter to apply that tool.
-6. Press "Reset mutation" to remove the edit.
+1. Select an exposure factor, such as "UV light".
+2. Select Expose.
+3. Drag across the DNA, or press "Pulse UV light".
+4. Examine the affected site and its atomic explanation.
+5. Change one protector.
+6. Apply the exposure again.
+7. Compare the lesion types and protection events.
 
-Tap or press Enter or Space on a DNA letter to use the same tools.
-Each action tries one edit against the unchanged original DNA.
-A click at another position replaces the previous trial.
-The edits do not accumulate.
-
-The chain preview shows the first 24 symbols and the full amino-acid count.
-The sequence comparison and export include the rest.
-
-Open "Edit a custom sequence or exact positions" for a custom sequence or a precise edit.
-The guided challenges and codon reference give more tasks and explanations.
+Press Reset for a fresh sample.
+Keep the exposure and elapsed time consistent for a comparison.
+The controls use relative scales.
 
 ## Install
 
@@ -58,36 +57,42 @@ npm install dna-mutation-explorer
 Import the component and its stylesheet.
 
 ```tsx
-import { MutationExplorer } from "dna-mutation-explorer/react";
+import { DnaDamageLab } from "dna-mutation-explorer/react";
 import "dna-mutation-explorer/styles.css";
 
 export default function Lesson() {
-  return <MutationExplorer />;
+  return <DnaDamageLab />;
 }
 ```
 
 For Next.js, put the component in a file with the `"use client"` directive.
-See the [integration guide](docs/INTEGRATION.md) for controlled state and CSS properties.
+See the [integration guide](docs/INTEGRATION.md) for sequence options, snapshots, and the advanced component.
 
-## How to read the result
+## What the lab shows
 
-A mutation is a change to a DNA sequence.
-The DNA letters represent bases.
-This model groups three bases into each codon.
-The RNA representation uses `U` in place of `T`.
-Each complete codon selects an amino acid or a stop signal.
-The protein output is the amino-acid sequence before the first known stop.
+UV can join neighboring pyrimidine bases on one strand.
+X-rays can ionize molecules and create reactive oxygen through water chemistry.
+Heat increases motion and opens base pairs without automatic mutations.
+The electric field moves the charged backbone without automatic radiation damage.
+Oxidants can damage bases.
 
-The protein string includes that stop as `*`.
+Antioxidants act on reactive oxygen.
+They do not block direct UV damage or restore broken DNA.
+UV filters and X-ray shields attenuate their respective exposure channels.
+Repair activity acts on existing lesions.
+Read the [model guide](docs/MODEL.md) for the biology and sources.
 
-A base change can leave the amino acid unchanged.
-A one-base deletion can change the downstream codon groups.
-The linked sequence views show these differences directly.
-The explanations describe the selected codon and the edit result.
+## Copy-and-repair utility
 
-## Guided challenges
+`DnaPlayground` remains available as a separate component.
+It illustrates base pairing, copying errors, mismatch repair, and one selected descendant branch.
+It uses its own headless engine through `dna-mutation-explorer/playground`.
+See the [teaching guide](docs/TEACHING.md) for that utility.
 
-The component includes eight challenges with goals, hints, and completion feedback.
+## Advanced sequence editor
+
+`MutationExplorer` compares exact coding-sequence edits, RNA codons, and amino acids.
+It includes eight challenges with goals, hints, and completion feedback.
 Each challenge uses a synthetic reference sequence.
 The feedback comes from the current sequence analysis.
 Progress stays in memory for the current component session.
@@ -97,7 +102,7 @@ Use `showChallenges={false}` to hide the challenges in a custom application.
 Use `dna-mutation-explorer/lessons` to add the same challenges to a different interface.
 See the [teaching guide](docs/TEACHING.md) for the challenge API and model limits.
 
-## TypeScript core
+## Sequence-analysis core
 
 The core has no runtime dependencies.
 The package root and `dna-mutation-explorer/core` export the same API.
@@ -123,10 +128,12 @@ The interface shows one-based positions.
 
 ## Model limits
 
-Supply the coding strand in the 5-prime to 3-prime direction.
-Translation starts at base zero with the standard genetic code.
-The core does not search for a start codon or remove introns.
-The results describe sequence changes, not protein function or disease risk.
+The lab uses 6–64 known DNA bases.
+The default synthetic sequence has 24 bases.
+The motion, forces, spacing, and time are illustrative.
+Electron paths and molecular events are schematic.
+The controls do not represent calibrated doses, reaction rates, or survival probabilities.
+The model does not predict traits, protein function, or disease risk.
 Read the [model guide](docs/MODEL.md) before use with scientific data.
 
 ## Local development

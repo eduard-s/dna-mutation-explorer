@@ -12,7 +12,8 @@ Keep the interface light for a reader at a desk in daylight.
 
 Use thin rules to separate the canvas, controls, and readouts.
 Use no cards, shadows, or gradients.
-Keep labels visible beside their controls.
+Put each slider below its label and value.
+Use the full control width, an 8-pixel track, and a 20-pixel thumb.
 Give each control a target of at least 44 pixels.
 
 Put a large DNA damage canvas first.

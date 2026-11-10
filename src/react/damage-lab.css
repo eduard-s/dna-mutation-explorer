@@ -25,16 +25,18 @@
 .dnad-controls fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
 .dnad-controls fieldset + fieldset { padding-top: 12px; border-top: 1px solid var(--dnad-rule); }
 .dnad-controls legend { width: 100%; margin-bottom: 7px; padding: 0; font-size: 13px; font-weight: 600; line-height: 1.4; }
-.dnad-range { display: grid; grid-template-columns: 94px minmax(0, 1fr) 36px; gap: 5px; align-items: center; min-height: 37px; }
+.dnad-range { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 8px; align-items: center; }
+.dnad-range + .dnad-range { margin-top: 10px; }
 .dnad-lab .dnad-factor { border: 0; border-radius: 0; padding: 4px 0; text-align: left; min-height: 32px; font-size: 13px; line-height: 1.35; }
 .dnad-lab .dnad-factor[aria-pressed="true"] { color: var(--dnad-accent); text-decoration: underline; text-underline-offset: 4px; }
-.dnad-range input[type="range"] { appearance: none; -webkit-appearance: none; display: block; width: 100%; min-width: 0; height: 30px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--dnad-accent); cursor: pointer; }
-.dnad-range input[type="range"]::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(to right, var(--dnad-accent) 0 var(--dnad-progress), var(--dnad-track) var(--dnad-progress) 100%); }
-.dnad-range input[type="range"]::-moz-range-track { height: 2px; background: var(--dnad-track); }
-.dnad-range input[type="range"]::-moz-range-progress { height: 2px; background: var(--dnad-accent); }
-.dnad-range input[type="range"]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; margin-top: -6px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
-.dnad-range input[type="range"]::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
-.dnad-range output { text-align: right; font: 11px/1.4 "Courier New", Courier, monospace; font-variant-numeric: tabular-nums; }
+.dnad-range .dnad-factor { grid-column: 1; grid-row: 1; }
+.dnad-range input[type="range"] { grid-column: 1 / -1; grid-row: 2; appearance: none; -webkit-appearance: none; display: block; width: 100%; min-width: 0; height: 44px; margin: 0; padding: 0; border: 0; background: transparent; accent-color: var(--dnad-accent); cursor: pointer; }
+.dnad-range input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 999px; background: linear-gradient(to right, var(--dnad-accent) 0 var(--dnad-progress), var(--dnad-track) var(--dnad-progress) 100%); }
+.dnad-range input[type="range"]::-moz-range-track { height: 8px; border-radius: 999px; background: var(--dnad-track); }
+.dnad-range input[type="range"]::-moz-range-progress { height: 8px; border-radius: 999px; background: var(--dnad-accent); }
+.dnad-range input[type="range"]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; margin-top: -6px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
+.dnad-range input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
+.dnad-range output { grid-column: 2; grid-row: 1; text-align: right; font: 12px/1.5 Arial, Helvetica, sans-serif; color: color-mix(in oklch, var(--dnad-ink) 80%, transparent); font-variant-numeric: tabular-nums; }
 .dnad-range output > span { margin-left: 1px; font-size: 9px; }
 .dnad-repair-switch { display: flex; align-items: center; gap: 12px; min-height: 37px; }
 .dnad-repair-switch > button { flex: 1; }
@@ -91,7 +93,6 @@
   .dnad-stage { height: 360px; }
   .dnad-toolbar button { padding-inline: 6px; }
   .dnad-toolbar button svg { width: 14px; height: 14px; }
-  .dnad-range { grid-template-columns: 110px minmax(0, 1fr) 36px; }
   .dnad-controls fieldset + fieldset { padding-top: 14px; }
   .dnad-range, .dnad-repair-switch, .dnad-lab .dnad-factor { min-height: 44px; }
   .dnad-species select { min-height: 44px; font-size: 16px; }

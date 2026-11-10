@@ -6,6 +6,7 @@ import { join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
+const manifest = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
 const temp = mkdtempSync(join(tmpdir(), "dna-package-"));
 const npm = (args, cwd = temp) => execFileSync("npm", args, { cwd, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
 const node = (source) => execFileSync(process.execPath, ["--input-type=module", "-e", source], { cwd: temp, encoding: "utf8" });
@@ -24,7 +25,7 @@ try {
   const installedRoot = join(temp, "node_modules", "@esmirnov.ai", "dna-mutation-explorer");
   const installedManifest = JSON.parse(readFileSync(join(installedRoot, "package.json"), "utf8"));
   assert.equal(installedManifest.name, "@esmirnov.ai/dna-mutation-explorer");
-  assert.equal(installedManifest.version, "0.4.1");
+  assert.equal(installedManifest.version, manifest.version);
   assert(readFileSync(join(installedRoot, "dist", "styles.css"), "utf8").length > 0, "The scoped package must include its stylesheet.");
   assert(lock.packages["node_modules/@esmirnov.ai/dna-mutation-explorer"], "The consumer must install the scoped package.");
   assert(!lock.packages["node_modules/dna-mutation-explorer"], "The consumer must not install the former package name.");

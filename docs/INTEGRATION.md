@@ -22,12 +22,25 @@ export function SequenceLesson() {
 The component uses a synthetic sequence by default.
 Supply `defaultSequence` and `defaultEdit` for a different initial example.
 If a custom sequence has no edit props, the component starts with "No edit".
+The built-in example also starts with no edit and highlights base 5.
 
 The interface uses one-based base positions.
 The API and callbacks use zero-based positions in the reference sequence.
-Select a base, RNA codon, or amino acid to move the edit position.
+The mouse tools apply one edit when a DNA coding-strand button receives a click, tap, Enter, or Space.
 Use Tab and Enter or Space to operate the sequence controls with a keyboard.
 The helix is a static diagram of the selected region.
+
+Each mouse action replaces the previous trial against the same reference sequence.
+The `onEditChange` callback receives the resulting edit.
+The reference sequence does not change after a trial.
+The public props stay the same in version 0.3.0.
+
+The chain preview shows the first 24 protein symbols and the full amino-acid count.
+The sequence comparison and export include the rest.
+
+Open "Edit a custom sequence or exact positions" to use the manual sequence and edit controls.
+Use those controls or the codon reference for multi-base tasks.
+An input error opens the manual controls automatically.
 
 ## Guided challenges
 
@@ -44,7 +57,7 @@ Hide the challenges for an editor-only interface.
 
 Use `onChallengeComplete` to receive completed challenge IDs.
 The callback fires once for each ID per mounted component.
-Reset and presets keep the completed IDs until the component unmounts.
+The reset controls and presets keep the completed IDs until the component unmounts.
 See the [teaching guide](TEACHING.md) to use the lessons API without React.
 
 ## Colors
@@ -98,8 +111,8 @@ export function ControlledLesson() {
   const [sequence, setSequence] = useState(SYNTHETIC_SEQUENCE);
   const [edit, setEdit] = useState<CodingEdit>({
     start: 4,
-    deleteCount: 1,
-    insert: "C",
+    deleteCount: 0,
+    insert: "",
   });
 
   return (

@@ -1,6 +1,6 @@
 {
   "name": "dna-mutation-explorer",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Compare coding DNA edits, codons, and protein sequences with a TypeScript core and a React component.",
   "type": "module",
   "license": "MIT",

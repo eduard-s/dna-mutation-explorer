@@ -64,5 +64,6 @@ test("a scientific embed can hide the challenge interface", () => {
   assert(!html.includes("Start challenge"));
   assert(!html.includes("or start a challenge"));
   assert(html.includes("Reference coding DNA"));
-  assert(html.includes("Amino-acid change"));
+  assert(html.includes("No change"));
+  assert(html.includes('aria-label="Mouse DNA playground"'));
 });

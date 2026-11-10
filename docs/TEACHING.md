@@ -1,5 +1,51 @@
 # Teaching guide
 
+## Mouse playground
+
+A mutation is a change to a DNA sequence.
+This playground shows how DNA letter changes affect codons and the translated amino-acid sequence.
+It supports lessons about sequence consequences.
+It does not predict health effects or protein function.
+
+The mouse playground appears before the guided challenges and forms.
+The built-in example starts with no edit at highlighted base 5.
+The original DNA stays unchanged during each trial.
+The original and edited protein chains show the current result.
+
+| Tool | Action on the coding strand |
+| --- | --- |
+| "Swap a letter" | Cycle the clicked base through `A`, `C`, `G`, and `T`. |
+| "Cut one base" | Remove the clicked reference base. |
+| "Cut one codon" | Remove the complete three-base codon that contains the clicked base. |
+| "Add a base" | Insert the selected palette base before the clicked reference base. |
+
+1. Select a tool.
+2. Click a letter on the DNA coding strand.
+3. Compare the edited protein chain with the original chain.
+4. Read the focused-codon result for the full amino-acid names.
+
+Repeated clicks with "Swap a letter" cycle the letter at the same position.
+For "Add a base", select `A`, `C`, `G`, or `T` in the palette.
+Use the "Append" control on the final DNA page to append a base.
+Press "Reset mutation" to remove the current edit.
+
+A click at another position replaces the previous trial.
+Each action makes one edit relative to the unchanged reference DNA.
+The edits do not accumulate.
+Tap, Enter, and Space apply the same tool as a mouse click.
+No tool needs a drag action.
+
+The chain preview shows the first 24 symbols, including a stop symbol when present.
+The full amino-acid count stays visible.
+The sequence comparison and export include the rest.
+Clay marks a different symbol at the same position.
+This comparison does not align protein sequences.
+
+Open "Edit a custom sequence or exact positions" for manual controls.
+Use those controls or the codon reference for multi-base replacements.
+The original sequence remains the reference for those edits.
+An input error opens the manual controls automatically.
+
 ## Guided challenges
 
 The React component includes eight guided challenges.
@@ -69,6 +115,10 @@ The sequence comparison and edit controls remain available.
 `onChallengeComplete` fires once for each completed challenge ID in a mounted component.
 Task resets and presets do not make the same ID fire again.
 With controlled props, update the parent state through the sequence and edit callbacks.
+
+The component starts evaluation after the host accepts the task reference and the initial unchanged result.
+A host that rejects those values cannot complete that task.
+The feedback explains that the host must accept the task values.
 
 ## Explanations and tooltips
 

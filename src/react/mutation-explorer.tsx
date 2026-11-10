@@ -3,6 +3,7 @@
 import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { AMINO_ACID_NAMES, CODON_TABLE, analyzeCodingEdit, type AminoAcid, type CodingAnalysis, type CodingEdit, type Translation } from "../core/index.js";
 import { CHALLENGES, EXAMPLE_EDITS, SYNTHETIC_SEQUENCE, evaluateChallenge, type ExampleEdit } from "../lessons/index.js";
+import { DirectPlayground } from "./direct-playground.js";
 
 export { SYNTHETIC_SEQUENCE, EXAMPLE_EDITS } from "../lessons/index.js";
 export type { ExampleEdit } from "../lessons/index.js";
@@ -206,8 +207,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
   defaultEdit: suppliedDefaultEdit, onSequenceChange, onEditChange, onAnalysisChange, showChallenges = true, onChallengeComplete,
   className = "", style }: MutationExplorerProps) {
   const id = useId();
-  const defaultEdit = suppliedDefaultEdit ?? (controlledSequence === undefined && defaultSequence === SYNTHETIC_SEQUENCE
-    ? EXAMPLE_EDITS[1].edit : { start: 0, deleteCount: 0, insert: "" });
+  const defaultEdit = suppliedDefaultEdit ?? { start: controlledSequence === undefined && defaultSequence === SYNTHETIC_SEQUENCE ? 4 : 0, deleteCount: 0, insert: "" };
   const [internalSequence, setInternalSequence] = useState(defaultSequence);
   const [internalEdit, setInternalEdit] = useState<CodingEdit>({ ...defaultEdit });
   const sequence = controlledSequence ?? internalSequence;
@@ -216,6 +216,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(6);
   const [exportMessage, setExportMessage] = useState("");
+  const [advancedOpen, setAdvancedOpen] = useState(false);
   const [chosenChallengeId, setChosenChallengeId] = useState(CHALLENGES[0]?.id ?? "");
   const [activeChallengeId, setActiveChallengeId] = useState<string | null>(null);
   const [armedChallengeId, setArmedChallengeId] = useState<string | null>(null);
@@ -235,6 +236,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
     catch (error) { return { analysis: null, error: error instanceof Error ? error.message : "The sequence or edit is invalid." }; }
   }, [sequence, edit.start, edit.deleteCount, edit.insert]);
   const analysis = result.analysis;
+  useEffect(() => { if (result.error) setAdvancedOpen(true); }, [result.error]);
   const challenge = CHALLENGES.find(item => item.id === chosenChallengeId) ?? CHALLENGES[0];
   const challengeIndex = CHALLENGES.findIndex(item => item.id === challenge?.id);
   const challengeActive = showChallenges && activeChallengeId === challenge?.id;
@@ -327,14 +329,11 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
   };
   return <section className={`dme-explorer ${className}`.trim()} style={style} aria-label="DNA mutation explorer">
     <div className="dme-start">
-      <h2>Start here</h2>
-      <p>Change DNA bases to see how a protein sequence changes. The built-in examples use synthetic coding DNA.</p>
-      <ol className="dme-flow"><li><strong>DNA</strong><span>The stored base sequence.</span></li>
-        <li><strong>RNA</strong><span>A copy with U instead of T.</span></li>
-        <li><strong>Protein</strong><span>An amino-acid chain, read from three-base codons.</span></li></ol>
-      <p className="dme-start-action">{showChallenges ? "Choose an example to see a result, or start a challenge to make your own edit."
-        : "Choose an example to see a result. Use the edit controls to make your own change."}</p>
+      <p>DNA letters, read three at a time, encode amino acids or stop signals.
+        Use this playground to learn the genetic code or compare a coding-DNA edit. The examples use synthetic DNA.</p>
     </div>
+    <DirectPlayground analysis={analysis} selected={selected} consequence={analysis ? consequenceNames[analysis.consequence] ?? analysis.consequence : "No result"}
+      onEdit={next => updateEdit(next, modeFor(next))} />
     {showChallenges && challenge && <section className={`dme-challenge${challengeResult?.completed ? " dme-challenge-complete" : ""}`} aria-label="Guided challenges">
       <div className="dme-challenge-heading"><div><span className="dme-section-label">Challenge {challengeIndex + 1} of {CHALLENGES.length}</span>
         <h2>{challenge.title}</h2></div><div className="dme-progress"><span>{completedChallenges.length} of {CHALLENGES.length} solved</span>
@@ -367,7 +366,10 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
       <p>{activeExample?.description ?? "Select a reference base to move the edit. Change the edit with the controls."}</p>
     </div>
 
-    <div className="dme-workspace">
+    <details className="dme-advanced" open={advancedOpen || Boolean(result.error)} onToggle={event => setAdvancedOpen(event.currentTarget.open)}>
+      <summary>Edit a custom sequence or exact positions</summary>
+      <p className="dme-advanced-note">Use these controls for a custom sequence or a precise edit with several bases.</p>
+      <div className="dme-workspace">
       <div className="dme-input-sequence">
         <div className="dme-field-title"><label className="dme-section-label" htmlFor={`${id}-sequence`}>Reference coding DNA</label>
           <Help term="coding DNA">The coding strand has the same base order as the RNA copy, with T instead of U. The frame starts at base 1.</Help></div>
@@ -396,17 +398,8 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
         <p className="dme-field-note">1. Choose an edit type. 2. Choose its position. 3. Enter the new bases or deletion length.</p>
       </fieldset>
     </div>
-    {result.error && <p className="dme-error" id={`${id}-error`} role="alert">{result.error}</p>}
-
-    <div className="dme-result" role="status" aria-live="polite" aria-atomic="true">
-      <div><span className="dme-field-title"><span className="dme-section-label">What happened?</span>
-        <Help term="sequence consequence">This result describes a sequence consequence under the standard genetic code. It does not predict protein function or disease.</Help></span>
-        <h2>{analysis ? consequenceNames[analysis.consequence] ?? analysis.consequence : "No result"}</h2>
-        <p>{analysis?.summary ?? "Correct the input to calculate a sequence consequence."}</p></div>
-      {analysis && <dl><div><dt>Length change</dt><dd>{analysis.lengthDelta > 0 ? "+" : ""}{analysis.lengthDelta} bases</dd></div>
-        <div><dt>Reference protein</dt><dd>{analysis.reference.protein.replace(/\*/g, "").length} amino acids</dd></div>
-        <div><dt>Edited protein</dt><dd>{analysis.edited.protein.replace(/\*/g, "").length} amino acids</dd></div></dl>}
-    </div>
+      {result.error && <p className="dme-error" id={`${id}-error`} role="alert">{result.error}</p>}
+    </details>
     <div className="dme-comparison" ref={compare}>
       <div className="dme-comparison-heading"><h2>Sequence comparison</h2><span>Standard genetic code · frame starts at base 1</span></div>
       <p className="dme-comparison-cue">Select a reference base to move the edit. Green marks the selected codon. Clay marks changed sequence.</p>

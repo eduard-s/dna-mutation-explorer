@@ -1,6 +1,7 @@
 # DNA mutation explorer
 
-Compare a coding DNA edit with its RNA codons and protein sequence.
+Change DNA letters and see the effect on the protein sequence.
+Compare the original and edited DNA, codons, and amino acids.
 Use the TypeScript core without a browser.
 Embed the React component in a scientific website or a lesson.
 
@@ -8,15 +9,35 @@ Embed the React component in a scientific website or a lesson.
 
 ## Features
 
-- Apply one substitution, insertion, deletion, or replacement to a reference sequence.
+- Swap, cut, or add DNA letters with the mouse, touch, or keyboard.
 - Compare the reference and edited DNA, RNA codons, and amino acids.
 - Examine synonymous changes, missense changes, stop changes, and frameshifts.
-- Select a base to move the edit and see its codon and amino acid.
+- Read full amino-acid names for the selected codon.
 - Learn the terms with explanations and tooltips.
 - Solve eight guided challenges with hints and sequence-based feedback.
 - Use the codon reference to choose a three-base replacement.
 - Export the edited DNA and protein sequence.
 - Keep the sequence data in the browser.
+
+## Try the playground
+
+1. Select "Swap a letter".
+2. Click a letter in the DNA coding strand.
+3. Compare the edited protein with the original protein.
+4. Select another tool to cut or add a base.
+5. Click a DNA letter to apply that tool.
+6. Press "Reset mutation" to remove the edit.
+
+Tap or press Enter or Space on a DNA letter to use the same tools.
+Each action tries one edit against the unchanged original DNA.
+A click at another position replaces the previous trial.
+The edits do not accumulate.
+
+The chain preview shows the first 24 symbols and the full amino-acid count.
+The sequence comparison and export include the rest.
+
+Open "Edit a custom sequence or exact positions" for a custom sequence or a precise edit.
+The guided challenges and codon reference give more tasks and explanations.
 
 ## Install
 
@@ -41,12 +62,7 @@ import { MutationExplorer } from "dna-mutation-explorer/react";
 import "dna-mutation-explorer/styles.css";
 
 export default function Lesson() {
-  return (
-    <MutationExplorer
-      defaultSequence="ATGGAACTGTAA"
-      defaultEdit={{ start: 5, deleteCount: 1, insert: "G" }}
-    />
-  );
+  return <MutationExplorer />;
 }
 ```
 
@@ -55,11 +71,13 @@ See the [integration guide](docs/INTEGRATION.md) for controlled state and CSS pr
 
 ## How to read the result
 
-The DNA sequence contains bases.
+A mutation is a change to a DNA sequence.
+The DNA letters represent bases.
 This model groups three bases into each codon.
 The RNA representation uses `U` in place of `T`.
 Each complete codon selects an amino acid or a stop signal.
 The protein output is the amino-acid sequence before the first known stop.
+
 The protein string includes that stop as `*`.
 
 A base change can leave the amino acid unchanged.

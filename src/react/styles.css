@@ -26,7 +26,7 @@
 .dme-explorer :focus-visible { outline: 2px solid var(--dme-accent); outline-offset: 3px; }
 .dme-explorer h2, .dme-explorer h3, .dme-explorer p, .dme-explorer figure { margin: 0; }
 .dme-section-label { display: block; font: 700 12px/1.5 "Courier New", Courier, monospace; letter-spacing: .055em; text-transform: uppercase; }
-.dme-start { padding: 6px 0 22px; }
+.dme-start { padding: 0 0 16px; }
 .dme-start h2 { font-size: 20px; font-weight: 500; margin-bottom: 8px; letter-spacing: -.02em; }
 .dme-start > p { max-width: 80ch; font-size: 14px; }
 .dme-flow { display: flex; flex-wrap: wrap; gap: 12px 35px; margin: 16px 0 12px; padding: 0; list-style: none; }
@@ -34,6 +34,78 @@
 .dme-flow strong { font: 700 14px "Courier New", Courier, monospace; }
 .dme-flow span { color: var(--dme-muted); }
 .dme-start .dme-start-action { font-size: 13px; color: var(--dme-accent); }
+.dme-direct { border-top: 1px solid var(--dme-rule); padding: 18px 0 26px; }
+.dme-direct-heading { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px 24px; }
+.dme-direct-heading h2 { font: 500 22px/1.2 Arial, Helvetica, sans-serif; letter-spacing: -.025em; }
+.dme-direct-heading p { max-width: 75ch; margin-top: 7px; font-size: 13px; color: var(--dme-muted); }
+.dme-direct-heading > button { flex-shrink: 0; font-size: 12px; }
+.dme-direct-tools { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 17px; }
+.dme-direct-tools button { font-size: 13px; }
+.dme-direct-tools button[aria-pressed="true"], .dme-base-palette button[aria-pressed="true"] { background: var(--dme-ink); border-color: var(--dme-ink); color: var(--dme-paper); }
+.dme-direct-tools button[aria-pressed="true"]:hover, .dme-base-palette button[aria-pressed="true"]:hover { color: var(--dme-paper); background: var(--dme-accent); }
+.dme-explorer .dme-direct-instruction { margin-top: 10px; font-size: 13px; max-width: 90ch; }
+.dme-base-palette { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 10px; font: 13px "Courier New", Courier, monospace; }
+.dme-base-palette button { min-width: 44px; font-weight: 700; }
+.dme-direct-dna { margin-top: 20px; min-width: 0; }
+.dme-direct-caption { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 5px 20px; font: 11px/1.5 "Courier New", Courier, monospace; color: var(--dme-muted); }
+.dme-mouse-ladder { display: grid; grid-template-columns: repeat(var(--dme-base-count), minmax(0, 1fr)); margin-top: 10px; }
+.dme-mouse-rung { position: relative; min-width: 0; height: 164px; border-bottom: 2px solid var(--dme-rule); }
+.dme-mouse-codon-alt { border-color: var(--dme-sage); }
+.dme-mouse-position { position: absolute; top: 0; width: 100%; text-align: center; font: 10px/1.5 "Courier New", Courier, monospace; color: var(--dme-muted); }
+.dme-mouse-bond { position: absolute; top: calc(60px + var(--dme-base-y)); bottom: calc(37px + var(--dme-base-y)); left: 50%; border-left: 1px solid var(--dme-rule); }
+.dme-explorer .dme-mouse-base { position: absolute; top: calc(38px + var(--dme-base-y)); left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 44px; height: 44px; min-height: 44px; padding: 0; border: 1px solid var(--dme-sage); border-radius: 50%; background: var(--dme-paper); font: 700 20px/1 "Courier New", Courier, monospace; }
+.dme-explorer .dme-mouse-base:hover:not(:disabled) { background: var(--dme-selected); border-color: var(--dme-accent); transform: translateX(-50%) scale(1.08); }
+.dme-explorer .dme-mouse-selected { outline: 2px solid var(--dme-sage); outline-offset: 3px; }
+.dme-explorer .dme-mouse-affected { background: var(--dme-changed); border-color: var(--dme-accent); }
+.dme-mouse-complement { position: absolute; bottom: calc(25px + var(--dme-base-y)); left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 25px; height: 25px; border: 1px solid var(--dme-rule); border-radius: 50%; color: var(--dme-muted); font: 12px/1 "Courier New", Courier, monospace; }
+.dme-direct-pagination { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 16px; margin-top: 7px; font: 11px/1.5 "Courier New", Courier, monospace; color: var(--dme-muted); }
+.dme-direct-pagination > div { display: flex; flex-wrap: wrap; gap: 6px; }
+.dme-direct-pagination button { font-size: 11px; padding-inline: 10px; }
+.dme-direct-trial { min-height: 20px; margin-top: 10px; font-size: 13px; color: var(--dme-accent); }
+.dme-explorer .dme-direct-limit { margin-top: 4px; font-size: 11px; color: var(--dme-muted); }
+.dme-explorer .dme-direct-max { margin-top: 4px; font-size: 11px; color: var(--dme-muted); }
+.dme-mouse-insertion { color: var(--dme-accent); font-weight: 700; }
+.dme-mouse-removed { opacity: .45; text-decoration: line-through; text-decoration-thickness: 2px; }
+.dme-direct .dme-result { margin: 15px 0 0; padding: 15px 0; }
+.dme-direct .dme-result h2 { font-size: 21px; }
+.dme-result .dme-direct-codon { display: flex; align-items: baseline; flex-wrap: wrap; gap: 5px 18px; margin-top: 9px; font-size: 13px; }
+.dme-direct-codon code { font: 700 14px "Courier New", Courier, monospace; }
+.dme-live-proteins { display: grid; gap: 12px; padding-top: 3px; }
+.dme-live-protein > div { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 7px; font-size: 12px; }
+.dme-live-protein > div > span { color: var(--dme-muted); font-size: 11px; }
+.dme-protein-chain { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+.dme-protein-chain li { display: grid; place-items: center; min-width: 28px; height: 28px; border: 1px solid var(--dme-rule); border-radius: 50%; color: var(--dme-ink); font: 700 12px/1 "Courier New", Courier, monospace; }
+.dme-protein-chain .dme-protein-stop { border-radius: 2px; padding: 0 6px; font-size: 10px; }
+.dme-protein-chain .dme-protein-different { background: var(--dme-changed); border-color: var(--dme-accent); }
+.dme-protein-chain .dme-protein-empty { border: 0; border-radius: 0; font-weight: 400; color: var(--dme-muted); }
+.dme-live-proteins > p, .dme-live-protein .dme-chain-limit { font-size: 11px; color: var(--dme-muted); }
+.dme-advanced { border-top: 1px solid var(--dme-rule); padding: 0 0 20px; }
+.dme-advanced > summary { display: flex; align-items: center; gap: 9px; min-height: 48px; padding-block: 9px; font-size: 14px; font-weight: 600; cursor: pointer; list-style: none; }
+.dme-advanced > summary::-webkit-details-marker { display: none; }
+.dme-advanced > summary::before { content: "+"; font: 20px/1 "Courier New", Courier, monospace; }
+.dme-advanced[open] > summary::before { content: "−"; }
+.dme-advanced .dme-advanced-note { max-width: 75ch; margin-bottom: 14px; font-size: 12px; color: var(--dme-muted); }
+@media (max-width: 520px) {
+  .dme-direct-heading { display: block; }
+  .dme-direct-heading h2 { font-size: 20px; }
+  .dme-direct-heading > button { margin-top: 10px; }
+  .dme-direct-tools { gap: 6px; margin-top: 10px; }
+  .dme-direct-tools button { flex: 1 1 calc(50% - 6px); padding-inline: 8px; }
+  .dme-direct .dme-result h2 { font-size: 20px; }
+}
+@container (min-width: 850px) {
+  .dme-direct { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); column-gap: 32px; grid-template-areas: "heading heading" "tools result" "palette result" "instruction result" "maxnote result" "dna proteins" "trial proteins" "limit proteins"; }
+  .dme-direct-heading { grid-area: heading; }
+  .dme-direct-tools { grid-area: tools; }
+  .dme-base-palette { grid-area: palette; }
+  .dme-direct-instruction { grid-area: instruction; }
+  .dme-direct-max { grid-area: maxnote; }
+  .dme-direct-dna { grid-area: dna; }
+  .dme-direct-trial { grid-area: trial; }
+  .dme-direct-limit { grid-area: limit; }
+  .dme-direct .dme-result { grid-area: result; align-self: start; grid-template-columns: 1fr; }
+  .dme-live-proteins { grid-area: proteins; align-self: start; margin-top: 20px; }
+}
 .dme-challenge { border-block: 1px solid var(--dme-rule); padding: 20px 0 18px; margin-bottom: 20px; }
 .dme-challenge-heading { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 12px 30px; }
 .dme-challenge h2 { font-size: 22px; font-weight: 500; letter-spacing: -.025em; line-height: 1.2; margin-top: 5px; }

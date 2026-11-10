@@ -159,6 +159,7 @@ Invalid positions, deletion counts, or sequence lengths cause a `RangeError`.
 The core does not clamp an invalid edit to the reference sequence.
 Catch these errors in a custom interface.
 The supplied React component shows input errors in the page.
+Input errors open the custom-sequence disclosure automatically.
 
 ## Constants
 
@@ -199,18 +200,29 @@ interface ExampleEdit {
 
 All props are optional.
 Without sequence props, the component uses a synthetic example.
-That example starts with `{ start: 4, deleteCount: 1, insert: "C" }`.
+That example starts with `{ start: 4, deleteCount: 0, insert: "" }`.
+The interface highlights base 5 without a mutation.
 With a custom sequence and no edit props, the component starts with `{ start: 0, deleteCount: 0, insert: "" }`.
 The interface calls this state "No edit".
 
 The sequence and edit can use controlled state independently.
 The example buttons restore the synthetic sequence before they apply the selected edit.
-Reset restores `defaultSequence` and `defaultEdit`.
-Without `defaultEdit`, Reset uses the initial edit rule.
+"Reset example" restores `defaultSequence` and `defaultEdit`.
+Without `defaultEdit`, it uses the initial edit rule.
+"Reset mutation" removes the current edit and keeps the reference sequence.
+
+The mouse tools emit the existing `CodingEdit` type through `onEditChange`.
+Each tool action makes one trial against the unchanged reference sequence.
+A new action replaces the previous trial.
+The component does not accumulate mouse edits.
+The public props stay the same in version 0.3.0.
+
+The chain preview shows the first 24 protein symbols and the full amino-acid count.
+The sequence comparison and export include the rest.
 
 The component loads a challenge after an explicit "Start challenge" action.
 `onChallengeComplete` fires once for each completed ID per mounted component.
-Reset and presets keep completed IDs for that session.
+The reset controls and presets keep completed IDs for that session.
 A reload or remount resets progress and callback history.
 See the [teaching guide](TEACHING.md) for tooltip controls and the codon reference.
 

@@ -21,11 +21,30 @@ try {
   npm(["install", "--ignore-scripts", "--no-audit", "--no-fund", resolve(temp, pack.filename)]);
   const lock = JSON.parse(readFileSync(join(temp, "package-lock.json"), "utf8"));
   assert(!lock.packages["node_modules/react"], "The core must install without React.");
+  const installedRoot = join(temp, "node_modules", "@esmirnov.ai", "dna-mutation-explorer");
+  const installedManifest = JSON.parse(readFileSync(join(installedRoot, "package.json"), "utf8"));
+  assert.equal(installedManifest.name, "@esmirnov.ai/dna-mutation-explorer");
+  assert.equal(installedManifest.version, "0.4.1");
+  assert(readFileSync(join(installedRoot, "dist", "styles.css"), "utf8").length > 0, "The scoped package must include its stylesheet.");
+  assert(lock.packages["node_modules/@esmirnov.ai/dna-mutation-explorer"], "The consumer must install the scoped package.");
+  assert(!lock.packages["node_modules/dna-mutation-explorer"], "The consumer must not install the former package name.");
+  writeFileSync(join(temp, "consumer.ts"), `
+    import { analyzeCodingEdit, type CodingEdit } from '@esmirnov.ai/dna-mutation-explorer';
+    import { translateDna } from '@esmirnov.ai/dna-mutation-explorer/core';
+    import { CHALLENGES } from '@esmirnov.ai/dna-mutation-explorer/lessons';
+    import { createDamageLab, getDamageMetrics } from '@esmirnov.ai/dna-mutation-explorer/playground';
+    const edit: CodingEdit = { start: 5, deleteCount: 1, insert: 'G' };
+    const result = analyzeCodingEdit('ATGGAACTGTAA', edit);
+    const protein: string = translateDna('ATGGAACTGTAA').protein;
+    const damage = getDamageMetrics(createDamageLab(600, 420));
+    void [result, protein, damage, CHALLENGES];
+  `);
+  execFileSync(process.execPath, [join(root, "node_modules", "typescript", "bin", "tsc"), "--noEmit", "--strict", "--skipLibCheck", "--module", "NodeNext", "--moduleResolution", "NodeNext", "--target", "ES2020", "consumer.ts"], { cwd: temp, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] });
   const result = JSON.parse(node(`
-    import { analyzeCodingEdit } from 'dna-mutation-explorer';
-    import { translateDna } from 'dna-mutation-explorer/core';
-    import { CHALLENGES } from 'dna-mutation-explorer/lessons';
-    import { createDamageLab, pulseDamage, getDamageMetrics, setDnaProtectors } from 'dna-mutation-explorer/playground';
+    import { analyzeCodingEdit } from '@esmirnov.ai/dna-mutation-explorer';
+    import { translateDna } from '@esmirnov.ai/dna-mutation-explorer/core';
+    import { CHALLENGES } from '@esmirnov.ai/dna-mutation-explorer/lessons';
+    import { createDamageLab, pulseDamage, getDamageMetrics, setDnaProtectors } from '@esmirnov.ai/dna-mutation-explorer/playground';
     if (CHALLENGES.length !== 8) throw new Error('The lesson export must contain eight challenges.');
     const lab = createDamageLab(600, 420, { species: 'bare', protectors: { repair: 0 } });
     lab.dna.paused = true;
@@ -43,7 +62,7 @@ try {
     const markup = node(`
       import React from 'react';
       import { renderToString } from 'react-dom/server';
-      import { MutationExplorer, DnaDamageLab, DnaPlayground } from 'dna-mutation-explorer/react';
+      import { MutationExplorer, DnaDamageLab, DnaPlayground } from '@esmirnov.ai/dna-mutation-explorer/react';
       process.stdout.write(renderToString(React.createElement(React.Fragment, null, React.createElement(DnaDamageLab), React.createElement(DnaPlayground), React.createElement(MutationExplorer))));
     `);
     assert(markup.includes("DNA"));

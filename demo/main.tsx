@@ -11,7 +11,7 @@ function Demo() {
   return <div className="demo-shell">
     <a className="demo-skip" href="#explorer">Skip to the explorer</a>
     <header className="demo-header"><a className="demo-author" href="https://esmirnov.ai/">esmirnov.ai</a>
-      <nav aria-label="Package links"><a href="https://github.com/eduard-s/dna-mutation-explorer">GitHub</a><a href="https://www.npmjs.com/package/dna-mutation-explorer">npm</a></nav></header>
+      <nav aria-label="Package links"><a href="https://github.com/eduard-s/dna-mutation-explorer">GitHub</a><a href="https://www.npmjs.com/package/@esmirnov.ai/dna-mutation-explorer">npm</a></nav></header>
     <main>
       <div className="demo-intro"><h1>DNA damage lab<span>.</span></h1><p>Expose the DNA to different conditions. Add protection. Watch which damage forms and which protection helps.</p></div>
       <div id="explorer"><DnaDamageLab /></div>
@@ -20,10 +20,10 @@ function Demo() {
       <section className="demo-package" aria-labelledby="package-title"><div><h2 id="package-title">Use it in your project</h2>
         <p>The npm package has a TypeScript core and an optional React component.</p><p>Use the same component as this demo.</p>
         <p><a href="https://github.com/eduard-s/dna-mutation-explorer#readme">Read the installation guide</a></p></div>
-        <pre><code>{`npm install dna-mutation-explorer
+        <pre><code>{`npm install @esmirnov.ai/dna-mutation-explorer
 
-import { DnaDamageLab } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 <DnaDamageLab />`}</code></pre></section>
       <section className="demo-science" aria-labelledby="model-title"><h2 id="model-title">What the model explains</h2>

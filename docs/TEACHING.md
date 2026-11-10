@@ -94,8 +94,8 @@ Its DNA still takes damage.
 Import the component and the stylesheet.
 
 ```tsx
-import { DnaDamageLab } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function DamageLesson() {
   return (
@@ -193,8 +193,8 @@ Read the [model guide](MODEL.md) for sources and limits.
 Import the component and the stylesheet.
 
 ```tsx
-import { DnaPlayground } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaPlayground } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function DnaLesson() {
   return (
@@ -320,8 +320,8 @@ A task reset also keeps completed challenge IDs.
 Import the component and its stylesheet.
 
 ```tsx
-import { MutationExplorer } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { MutationExplorer } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function DnaLesson() {
   return (
@@ -370,8 +370,8 @@ It does not predict protein function.
 Import the challenge data and evaluation function from the lessons entry.
 
 ```ts
-import { analyzeCodingEdit } from "dna-mutation-explorer";
-import { CHALLENGES, evaluateChallenge } from "dna-mutation-explorer/lessons";
+import { analyzeCodingEdit } from "@esmirnov.ai/dna-mutation-explorer";
+import { CHALLENGES, evaluateChallenge } from "@esmirnov.ai/dna-mutation-explorer/lessons";
 
 const challenge = CHALLENGES[0];
 const analysis = analyzeCodingEdit(challenge.sequence, {

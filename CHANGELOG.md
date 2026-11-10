@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+- Move the npm package to `@esmirnov.ai/dna-mutation-explorer`.
+- Update installation commands, import examples, and npm links.
+- Add scoped package checks and a typed core consumer.
+- Keep the component API, model behavior, and visual design.
+
 ## 0.4.0
 
 - Add `DnaDamageLab` as the main damage-and-protection experience.

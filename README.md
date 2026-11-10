@@ -10,7 +10,7 @@ Embed `DnaDamageLab` in a scientific website or a lesson.
 Use `DnaPlayground` for the separate copy-and-repair utility.
 Use `MutationExplorer` for the advanced sequence editor.
 
-[Demo](https://esmirnov.ai/dna-mutation-explorer/) · [API](docs/API.md) · [Model](docs/MODEL.md) · [Teaching](docs/TEACHING.md) · [Integration](docs/INTEGRATION.md)
+[Demo](https://esmirnov.ai/dna-mutation-explorer/) · [npm package](https://www.npmjs.com/package/@esmirnov.ai/dna-mutation-explorer) · [API](docs/API.md) · [Model](docs/MODEL.md) · [Teaching](docs/TEACHING.md) · [Integration](docs/INTEGRATION.md)
 
 ## Features
 
@@ -40,16 +40,20 @@ The controls use relative scales.
 
 ## Install
 
+Use `@esmirnov.ai/dna-mutation-explorer` for new installations.
+For an older unscoped installation, replace the package name in its imports.
+The component API and export paths stay the same after the package name.
+
 Install the package and React for the visual component.
 
 ```sh
-npm install dna-mutation-explorer react react-dom
+npm install @esmirnov.ai/dna-mutation-explorer react react-dom
 ```
 
 For the core only, install the package without React.
 
 ```sh
-npm install dna-mutation-explorer
+npm install @esmirnov.ai/dna-mutation-explorer
 ```
 
 ## React component
@@ -57,8 +61,8 @@ npm install dna-mutation-explorer
 Import the component and its stylesheet.
 
 ```tsx
-import { DnaDamageLab } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export default function Lesson() {
   return <DnaDamageLab />;
@@ -86,7 +90,7 @@ Read the [model guide](docs/MODEL.md) for the biology and sources.
 
 `DnaPlayground` remains available as a separate component.
 It illustrates base pairing, copying errors, mismatch repair, and one selected descendant branch.
-It uses its own headless engine through `dna-mutation-explorer/playground`.
+It uses its own headless engine through `@esmirnov.ai/dna-mutation-explorer/playground`.
 See the [teaching guide](docs/TEACHING.md) for that utility.
 
 ## Advanced sequence editor
@@ -99,16 +103,16 @@ Progress stays in memory for the current component session.
 A reload or remount resets the progress.
 
 Use `showChallenges={false}` to hide the challenges in a custom application.
-Use `dna-mutation-explorer/lessons` to add the same challenges to a different interface.
+Use `@esmirnov.ai/dna-mutation-explorer/lessons` to add the same challenges to a different interface.
 See the [teaching guide](docs/TEACHING.md) for the challenge API and model limits.
 
 ## Sequence-analysis core
 
 The core has no runtime dependencies.
-The package root and `dna-mutation-explorer/core` export the same API.
+The package root and `@esmirnov.ai/dna-mutation-explorer/core` export the same API.
 
 ```ts
-import { analyzeCodingEdit } from "dna-mutation-explorer";
+import { analyzeCodingEdit } from "@esmirnov.ai/dna-mutation-explorer";
 
 const result = analyzeCodingEdit("ATGGAACTGTAA", {
   start: 5,

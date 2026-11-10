@@ -2,11 +2,11 @@
 
 ## Exports
 
-Import the core from `dna-mutation-explorer` or `dna-mutation-explorer/core`.
-Import the React components from `dna-mutation-explorer/react`.
-Import the headless playground engine from `dna-mutation-explorer/playground`.
-Import the challenge data from `dna-mutation-explorer/lessons`.
-Import the component stylesheet from `dna-mutation-explorer/styles.css`.
+Import the core from `@esmirnov.ai/dna-mutation-explorer` or `@esmirnov.ai/dna-mutation-explorer/core`.
+Import the React components from `@esmirnov.ai/dna-mutation-explorer/react`.
+Import the headless playground engine from `@esmirnov.ai/dna-mutation-explorer/playground`.
+Import the challenge data from `@esmirnov.ai/dna-mutation-explorer/lessons`.
+Import the component stylesheet from `@esmirnov.ai/dna-mutation-explorer/styles.css`.
 
 The core has no React dependency.
 All core functions are synchronous.
@@ -46,7 +46,7 @@ Animation samples occur about every 180 milliseconds, and pointer samples occur 
 
 ## Damage engine
 
-Import the damage functions and types from `dna-mutation-explorer/playground`.
+Import the damage functions and types from `@esmirnov.ai/dna-mutation-explorer/playground`.
 The engine changes a mutable `DamageWorld` and needs no React.
 
 ```ts
@@ -54,7 +54,7 @@ import {
   createDamageLab,
   pulseDamage,
   takeDamageSnapshot,
-} from "dna-mutation-explorer/playground";
+} from "@esmirnov.ai/dna-mutation-explorer/playground";
 
 const world = createDamageLab(800, 420, {
   seed: 42,
@@ -216,7 +216,7 @@ Invalid sequence input shows an error and disables the controls.
 
 ## Playground snapshots
 
-Import `DnaSnapshot` from `dna-mutation-explorer/playground`.
+Import `DnaSnapshot` from `@esmirnov.ai/dna-mutation-explorer/playground`.
 Snapshots contain sequence data and readouts, without canvas coordinates.
 
 ```ts
@@ -265,7 +265,7 @@ import {
   completeDnaCopy,
   advanceDnaGeneration,
   getDnaMetrics,
-} from "dna-mutation-explorer/playground";
+} from "@esmirnov.ai/dna-mutation-explorer/playground";
 
 const world = createDnaPlayground(800, 420, { seed: 42 });
 startDnaCopy(world, true);

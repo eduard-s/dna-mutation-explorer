@@ -5,14 +5,14 @@
 Install the package and the React dependencies.
 
 ```sh
-npm install dna-mutation-explorer react react-dom
+npm install @esmirnov.ai/dna-mutation-explorer react react-dom
 ```
 
 Import the component and the stylesheet.
 
 ```tsx
-import { DnaDamageLab } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function SequenceLesson() {
   return <DnaDamageLab seed={42} />;
@@ -55,8 +55,8 @@ The display resumes when visible unless the user paused it.
 Use `onChange` to receive damage snapshots.
 
 ```tsx
-import { DnaDamageLab } from "dna-mutation-explorer/react";
-import type { DamageSnapshot } from "dna-mutation-explorer/playground";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
+import type { DamageSnapshot } from "@esmirnov.ai/dna-mutation-explorer/playground";
 
 function receiveDamage(snapshot: DamageSnapshot) {
   console.log(snapshot.activeLesions, snapshot.repaired, snapshot.neutralized);
@@ -108,8 +108,8 @@ The component reads the color properties for its canvas theme.
 Use `DnaPlayground` for the separate DNA copy model.
 
 ```tsx
-import { DnaPlayground } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaPlayground } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 <DnaPlayground seed={42} />;
 ```
@@ -136,8 +136,8 @@ The display resumes when visible unless the user paused it.
 Use `onChange` to receive model readouts and sequence data.
 
 ```tsx
-import { DnaPlayground } from "dna-mutation-explorer/react";
-import type { DnaSnapshot } from "dna-mutation-explorer/playground";
+import { DnaPlayground } from "@esmirnov.ai/dna-mutation-explorer/react";
+import type { DnaSnapshot } from "@esmirnov.ai/dna-mutation-explorer/playground";
 
 function receiveSnapshot(snapshot: DnaSnapshot) {
   console.log(snapshot.sequence, snapshot.mismatches, snapshot.changes);
@@ -192,8 +192,8 @@ Keep it in an optional section when the canvas is the main experience.
 
 ```tsx
 import { useState } from "react";
-import { DnaDamageLab, MutationExplorer } from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+import { DnaDamageLab, MutationExplorer } from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function DnaPage() {
   const [showExplorer, setShowExplorer] = useState(false);
@@ -224,7 +224,7 @@ The helix is a static diagram of the selected region.
 Each mouse action replaces the previous trial against the same reference sequence.
 The `onEditChange` callback receives the resulting edit.
 The reference sequence does not change after a trial.
-The `MutationExplorer` props stay the same in version 0.4.0.
+The `MutationExplorer` props stay the same in version 0.4.1.
 
 The chain preview shows the first 24 protein symbols and the full amino-acid count.
 The sequence comparison and export include the rest.
@@ -291,12 +291,12 @@ Update the parent state when the callbacks receive new values.
 
 ```tsx
 import { useState } from "react";
-import type { CodingEdit } from "dna-mutation-explorer";
+import type { CodingEdit } from "@esmirnov.ai/dna-mutation-explorer";
 import {
   MutationExplorer,
   SYNTHETIC_SEQUENCE,
-} from "dna-mutation-explorer/react";
-import "dna-mutation-explorer/styles.css";
+} from "@esmirnov.ai/dna-mutation-explorer/react";
+import "@esmirnov.ai/dna-mutation-explorer/styles.css";
 
 export function ControlledLesson() {
   const [sequence, setSequence] = useState(SYNTHETIC_SEQUENCE);
@@ -327,14 +327,14 @@ Put the component in a client component file.
 ```tsx
 "use client";
 
-import { DnaDamageLab } from "dna-mutation-explorer/react";
+import { DnaDamageLab } from "@esmirnov.ai/dna-mutation-explorer/react";
 
 export function DnaExplorer() {
   return <DnaDamageLab />;
 }
 ```
 
-Import `dna-mutation-explorer/styles.css` in the route or root layout.
+Import `@esmirnov.ai/dna-mutation-explorer/styles.css` in the route or root layout.
 The package supports a static export.
 It needs no API route or server process.
 
@@ -343,13 +343,13 @@ It needs no API route or server process.
 Install only the package.
 
 ```sh
-npm install dna-mutation-explorer
+npm install @esmirnov.ai/dna-mutation-explorer
 ```
 
 Import the core API in a browser module, a Node.js script, or a worker.
 
 ```ts
-import { analyzeCodingEdit } from "dna-mutation-explorer";
+import { analyzeCodingEdit } from "@esmirnov.ai/dna-mutation-explorer";
 
 const result = analyzeCodingEdit("ATGGAACTGTAA", {
   start: 5,

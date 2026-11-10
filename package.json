@@ -1,6 +1,6 @@
 {
-  "name": "dna-mutation-explorer",
-  "version": "0.4.0",
+  "name": "@esmirnov.ai/dna-mutation-explorer",
+  "version": "0.4.1",
   "description": "An interactive DNA damage and protection lab, with molecular animations, a TypeScript engine, and React components.",
   "type": "module",
   "license": "MIT",

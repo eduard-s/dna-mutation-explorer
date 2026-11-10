@@ -1,0 +1,35 @@
+:root { color: #303832; background: #dfe5dc; font-family: Arial, Helvetica, sans-serif; color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+a { color: #785448; text-underline-offset: 4px; }
+a:hover { color: #303832; }
+:focus-visible { outline: 2px solid #785448; outline-offset: 4px; }
+.demo-shell { max-width: 1184px; padding: 0 32px; margin-inline: auto; }
+.demo-header { min-height: 100px; display: flex; align-items: center; justify-content: space-between; gap: 25px; font: 14px "Courier New", Courier, monospace; }
+.demo-header a { display: inline-flex; align-items: center; min-height: 44px; }
+.demo-author { font-size: 18px; color: #303832; font-weight: 700; text-decoration: none; }
+.demo-header nav { display: flex; gap: 25px; }
+.demo-intro { padding: 43px 0 37px; }
+.demo-intro h1 { margin: 0 0 15px; font-size: 48px; line-height: 1.07; letter-spacing: -.055em; font-weight: 500; }
+.demo-intro h1 span { color: #785448; }
+.demo-intro p { font-size: 18px; margin: 0; max-width: 65ch; }
+.demo-intro .demo-local { font: 12px/1.5 "Courier New", Courier, monospace; color: #5d695f; margin-top: 12px; }
+.demo-package { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px; border-top: 1px solid #b8c3b5; padding-top: 32px; margin-top: 42px; }
+.demo-package h2, .demo-science h2 { font-size: 22px; font-weight: 500; margin: 0 0 14px; letter-spacing: -.025em; }
+.demo-package p, .demo-science p { font-size: 14px; line-height: 1.6; margin: 8px 0 0; max-width: 70ch; }
+.demo-package pre { padding: 20px; background: #eff2ed; margin: 0; overflow-x: auto; font: 12px/1.7 "Courier New", Courier, monospace; min-width: 0; }
+.demo-science { padding-top: 32px; max-width: 75ch; }
+.demo-footer { display: flex; align-items: center; flex-wrap: wrap; gap: 14px 28px; border-top: 1px solid #b8c3b5; margin-top: 44px; padding-block: 25px; font: 12px/1.5 "Courier New", Courier, monospace; }
+.demo-footer a { min-height: 44px; display: inline-flex; align-items: center; }
+.demo-footer span { margin-right: auto; }
+.demo-skip { position: absolute; left: 16px; top: -100px; background: #eff2ed; padding: 12px; z-index: 5; }
+.demo-skip:focus { top: 12px; }
+@media (max-width: 650px) {
+  .demo-shell { padding-inline: 18px; }
+  .demo-header { min-height: 76px; }
+  .demo-intro { padding-top: 25px; }
+  .demo-intro h1 { font-size: 35px; }
+  .demo-intro p { font-size: 16px; }
+  .demo-package { grid-template-columns: 1fr; gap: 20px; }
+  .demo-package pre { padding: 14px; }
+}

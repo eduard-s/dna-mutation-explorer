@@ -1,0 +1,88 @@
+{
+  "name": "dna-mutation-explorer",
+  "version": "0.1.0",
+  "description": "Compare coding DNA edits, codons, and protein sequences with a TypeScript core and a React component.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Eduard Smirnov",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eduard-s/dna-mutation-explorer.git"
+  },
+  "homepage": "https://esmirnov.ai/dna-mutation-explorer/",
+  "bugs": {
+    "url": "https://github.com/eduard-s/dna-mutation-explorer/issues"
+  },
+  "keywords": [
+    "dna",
+    "genetics",
+    "mutation",
+    "codon",
+    "translation",
+    "bioinformatics",
+    "react",
+    "typescript"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "main": "./dist/core/index.js",
+  "types": "./dist/core/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./core": {
+      "types": "./dist/core/index.d.ts",
+      "import": "./dist/core/index.js"
+    },
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js"
+    },
+    "./styles.css": "./dist/styles.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "docs",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 4175",
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-styles.mjs",
+    "build:demo": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 4175",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run build && node --test tests/*.test.mjs",
+    "prepack": "npm run build",
+    "test:package": "npm run build && node scripts/smoke-package.mjs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "peerDependencies": {
+    "react": ">=18.2.0 <20"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
+    "vite": "8.3.6"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

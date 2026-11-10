@@ -79,3 +79,20 @@ It does not produce HGVS variant descriptions.
 The demo sequence is synthetic.
 It does not represent a measured biological sample.
 The helix is a sequence diagram, not a molecular mechanics simulation.
+
+## Challenge results
+
+The challenges use synthetic sequences and the same standard-code analysis as the explorer.
+Their completion rules examine sequence changes, amino-acid output, stops, or the reading frame.
+Completion records success with a synthetic sequence only.
+
+A repair challenge can start with a damaged synthetic reference.
+The explorer still compares the edit with that reference.
+A successful repair can therefore show a sequence-change label relative to the damaged reference.
+The repair-frame challenge needs the exact original synthetic DNA.
+Its completion does not prove that protein function is restored.
+
+The ambiguity challenge starts with an ambiguous reference codon.
+It can finish with definite edited codons while the comparison consequence stays `uncertain`.
+That label describes uncertainty in the reference comparison.
+It does not mean that the edited codon is still ambiguous.

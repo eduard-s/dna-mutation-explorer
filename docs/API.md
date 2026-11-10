@@ -4,6 +4,7 @@
 
 Import the core from `dna-mutation-explorer` or `dna-mutation-explorer/core`.
 Import the visual component from `dna-mutation-explorer/react`.
+Import the challenge data from `dna-mutation-explorer/lessons`.
 Import the component stylesheet from `dna-mutation-explorer/styles.css`.
 
 The core has no React dependency.
@@ -191,6 +192,8 @@ interface ExampleEdit {
 | `onSequenceChange` | `(sequence: string) => void` | Receive a reference sequence change. |
 | `onEditChange` | `(edit: CodingEdit) => void` | Receive an edit change. |
 | `onAnalysisChange` | `(analysis: CodingAnalysis \| null) => void` | Receive an analysis, or `null` for invalid input. |
+| `showChallenges` | `boolean` | Show guided challenges. The default is `true`. |
+| `onChallengeComplete` | `(id: string) => void` | Receive a completed challenge ID. |
 | `className` | `string` | Add a class to the component root. |
 | `style` | `CSSProperties` | Add styles to the component root. |
 
@@ -204,3 +207,49 @@ The sequence and edit can use controlled state independently.
 The example buttons restore the synthetic sequence before they apply the selected edit.
 Reset restores `defaultSequence` and `defaultEdit`.
 Without `defaultEdit`, Reset uses the initial edit rule.
+
+The component loads a challenge after an explicit "Start challenge" action.
+`onChallengeComplete` fires once for each completed ID per mounted component.
+Reset and presets keep completed IDs for that session.
+A reload or remount resets progress and callback history.
+See the [teaching guide](TEACHING.md) for tooltip controls and the codon reference.
+
+## Lessons
+
+The lessons entry has no React dependency.
+It exports `CHALLENGES`, `evaluateChallenge`, `SYNTHETIC_SEQUENCE`, and `EXAMPLE_EDITS`.
+It also exports the `Challenge`, `ChallengeEvaluation`, and `ExampleEdit` types.
+
+```ts
+interface Challenge {
+  id: string;
+  title: string;
+  goal: string;
+  explanation: string;
+  hints: readonly string[];
+  sequence: string;
+  initialEdit: CodingEdit;
+  targetProtein?: string;
+}
+
+interface ChallengeEvaluation {
+  completed: boolean;
+  feedback: string;
+}
+```
+
+`CHALLENGES` is a readonly array of eight challenges.
+`targetProtein` omits the stop symbol.
+The initial edit uses zero-based reference coordinates.
+Each challenge starts with a no-op edit at position zero.
+
+### `evaluateChallenge(id, analysis)`
+
+Evaluate a result against the rules for one challenge.
+Use `analyzeCodingEdit` with that challenge's reference sequence.
+The return value contains a completion flag and feedback text.
+The function does not store progress or call React callbacks.
+
+An unknown ID or a different reference gives `completed: false` with feedback.
+The completion rules compare actual sequence outputs.
+See the [teaching guide](TEACHING.md) for an example and challenge limits.

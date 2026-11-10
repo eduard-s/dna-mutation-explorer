@@ -29,6 +29,24 @@ Select a base, RNA codon, or amino acid to move the edit position.
 Use Tab and Enter or Space to operate the sequence controls with a keyboard.
 The helix is a static diagram of the selected region.
 
+## Guided challenges
+
+The component shows eight guided challenges by default.
+Each challenge has a goal, explanations, hints, and feedback.
+The component keeps completion progress only in memory.
+A reload or remount resets that progress.
+
+Hide the challenges for an editor-only interface.
+
+```tsx
+<MutationExplorer showChallenges={false} />
+```
+
+Use `onChallengeComplete` to receive completed challenge IDs.
+The callback fires once for each ID per mounted component.
+Reset and presets keep the completed IDs until the component unmounts.
+See the [teaching guide](TEACHING.md) to use the lessons API without React.
+
 ## Colors
 
 Add a class to the component root.

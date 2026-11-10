@@ -24,6 +24,8 @@ try {
   const result = JSON.parse(node(`
     import { analyzeCodingEdit } from 'dna-mutation-explorer';
     import { translateDna } from 'dna-mutation-explorer/core';
+    import { CHALLENGES } from 'dna-mutation-explorer/lessons';
+    if (CHALLENGES.length !== 8) throw new Error('The lesson export must contain eight challenges.');
     const result = analyzeCodingEdit('ATGGAACTGTAA', { start: 5, deleteCount: 1, insert: 'G' });
     process.stdout.write(JSON.stringify({ consequence: result.consequence, protein: translateDna('ATGGAACTGTAA').protein }));
   `));

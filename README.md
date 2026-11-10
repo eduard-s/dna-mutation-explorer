@@ -4,7 +4,7 @@ Compare a coding DNA edit with its RNA codons and protein sequence.
 Use the TypeScript core without a browser.
 Embed the React component in a scientific website or a lesson.
 
-[Demo](https://esmirnov.ai/dna-mutation-explorer/) · [API](docs/API.md) · [Model](docs/MODEL.md) · [Integration](docs/INTEGRATION.md)
+[Demo](https://esmirnov.ai/dna-mutation-explorer/) · [API](docs/API.md) · [Model](docs/MODEL.md) · [Teaching](docs/TEACHING.md) · [Integration](docs/INTEGRATION.md)
 
 ## Features
 
@@ -12,6 +12,9 @@ Embed the React component in a scientific website or a lesson.
 - Compare the reference and edited DNA, RNA codons, and amino acids.
 - Examine synonymous changes, missense changes, stop changes, and frameshifts.
 - Select a base to move the edit and see its codon and amino acid.
+- Learn the terms with explanations and tooltips.
+- Solve eight guided challenges with hints and sequence-based feedback.
+- Use the codon reference to choose a three-base replacement.
 - Export the edited DNA and protein sequence.
 - Keep the sequence data in the browser.
 
@@ -49,6 +52,32 @@ export default function Lesson() {
 
 For Next.js, put the component in a file with the `"use client"` directive.
 See the [integration guide](docs/INTEGRATION.md) for controlled state and CSS properties.
+
+## How to read the result
+
+The DNA sequence contains bases.
+This model groups three bases into each codon.
+The RNA representation uses `U` in place of `T`.
+Each complete codon selects an amino acid or a stop signal.
+The protein output is the amino-acid sequence before the first known stop.
+The protein string includes that stop as `*`.
+
+A base change can leave the amino acid unchanged.
+A one-base deletion can change the downstream codon groups.
+The linked sequence views show these differences directly.
+The explanations describe the selected codon and the edit result.
+
+## Guided challenges
+
+The component includes eight challenges with goals, hints, and completion feedback.
+Each challenge uses a synthetic reference sequence.
+The feedback comes from the current sequence analysis.
+Progress stays in memory for the current component session.
+A reload or remount resets the progress.
+
+Use `showChallenges={false}` to hide the challenges in a custom application.
+Use `dna-mutation-explorer/lessons` to add the same challenges to a different interface.
+See the [teaching guide](docs/TEACHING.md) for the challenge API and model limits.
 
 ## TypeScript core
 

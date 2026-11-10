@@ -49,3 +49,20 @@ test("long input renders a bounded sequence window", () => {
   assert((html.match(/<button/g) ?? []).length < 120);
   assert(html.includes("10000"));
 });
+
+test("the teaching interface starts without completed challenges", () => {
+  const html = render();
+  assert(html.includes('aria-label="Guided challenges"'));
+  assert(html.includes("Start challenge"));
+  assert(html.includes('value="0" max="8"'));
+  assert(html.includes("Explain coding DNA"));
+});
+
+test("a scientific embed can hide the challenge interface", () => {
+  const html = render({ showChallenges: false });
+  assert(!html.includes('aria-label="Guided challenges"'));
+  assert(!html.includes("Start challenge"));
+  assert(!html.includes("or start a challenge"));
+  assert(html.includes("Reference coding DNA"));
+  assert(html.includes("Amino-acid change"));
+});

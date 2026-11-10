@@ -10,7 +10,7 @@ function Demo() {
     <header className="demo-header"><a className="demo-author" href="https://esmirnov.ai/">esmirnov.ai</a>
       <nav aria-label="Package links"><a href="https://github.com/eduard-s/dna-mutation-explorer">GitHub</a><a href="https://www.npmjs.com/package/dna-mutation-explorer">npm</a></nav></header>
     <main>
-      <div className="demo-intro"><h1>DNA mutation explorer<span>.</span></h1><p>Edit a coding sequence. Compare the codons and protein.</p>
+      <div className="demo-intro"><h1>DNA mutation explorer<span>.</span></h1><p>Change a DNA sequence. Discover what changes in its protein.</p>
         <p className="demo-local">All sequence analysis stays in your browser.</p></div>
       <div id="explorer"><MutationExplorer /></div>
       <section className="demo-package" aria-labelledby="package-title"><div><h2 id="package-title">Use it in your project</h2>

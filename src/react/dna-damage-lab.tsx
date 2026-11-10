@@ -224,14 +224,6 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
 
   return <section className={`dnad-lab ${className}`.trim()} style={style} ref={root} aria-label="DNA damage and protection lab">
     <div className="dnad-grid">
-      <div className="dnad-controls dnad-controls-left">
-        <fieldset><legend>Radiation</legend>
-          {range("uv", "UV light", "UV can form a bond between nearby T or C bases on the same strand.")}
-          {range("xray", "X-rays", "Ionizing radiation can damage bases and break the DNA backbone.")}</fieldset>
-        <fieldset><legend>Heat</legend>{range("heat", "Thermal motion", "Heat increases motion and opens base pairs. An open pair is not a backbone break.")}</fieldset>
-        <fieldset><legend>Electric field</legend>{range("electric", "Field strength", "The signed field moves negatively charged DNA against the field direction.")}</fieldset>
-      </div>
-
       <div className="dnad-field">
         <div className="dnad-toolbar"><div role="group" aria-label="Molecular tools" className="dnad-brushes">
           {(["grab", "expose", "repair"] as const).map(tool => <button key={tool} type="button" disabled={!ready} aria-pressed={brush === tool}
@@ -275,9 +267,16 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
           }} />{error && <p className="dnad-error" role="alert">{error}</p>}</div>
         <div className="dnad-field-footer"><button type="button" disabled={!ready} onClick={() => actions.current.pulse()}>Pulse {effectNames[effect]}</button>
           <span>{ready ? selection : "Select a base pair"}</span></div>
-        <DamageLegend />
         <p className="dnad-message" role="status" aria-live="polite">{message}</p>
         <span className="dnad-sr-only" id={`${id}-keys`}>Arrows select a base pair. Space applies the tool. In Grab, Space holds or releases the DNA, and arrows pull it. Enter pauses. G selects Grab. E selects Expose. R selects Repair.</span>
+      </div>
+
+      <div className="dnad-controls dnad-controls-left">
+        <fieldset><legend>Radiation</legend>
+          {range("uv", "UV light", "UV can form a bond between nearby T or C bases on the same strand.")}
+          {range("xray", "X-rays", "Ionizing radiation can damage bases and break the DNA backbone.")}</fieldset>
+        <fieldset><legend>Heat</legend>{range("heat", "Thermal motion", "Heat increases motion and opens base pairs. An open pair is not a backbone break.")}</fieldset>
+        <fieldset><legend>Electric field</legend>{range("electric", "Field strength", "The signed field moves negatively charged DNA against the field direction.")}</fieldset>
       </div>
 
       <div className="dnad-controls dnad-controls-right">
@@ -296,6 +295,7 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
           <p className="dnad-species-note">{profile.description}</p></fieldset>
       </div>
 
+      <div className="dnad-field-key"><DamageLegend /></div>
       <section className="dnad-readouts" aria-labelledby={`${id}-readouts`}><h2 id={`${id}-readouts`}>Readouts</h2><dl>
         {([ ["Active lesions", metrics.activeLesions], ["UV dimers", metrics.dimers], ["Single breaks", metrics.singleBreaks], ["Double breaks", metrics.doubleBreaks],
           ["Oxidized bases", metrics.oxidizedBases], ["Open pairs", metrics.openPairs], ["Repaired", metrics.repaired], ["Radicals stopped", metrics.neutralized] ] as const).map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{ready ? value : "..."}</dd></div>)}

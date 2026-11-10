@@ -18,7 +18,7 @@
 .dnad-lab button:hover:not(:disabled) { color: var(--dnad-accent); border-color: var(--dnad-accent); }
 .dnad-lab :is(button, input, select):disabled { opacity: .4; cursor: default; }
 .dnad-lab :focus-visible { outline: 2px solid var(--dnad-accent); outline-offset: 3px; }
-.dnad-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr) minmax(0, 1fr); grid-template-areas: "left field right" "left readouts right" "left atomic right"; align-items: start; gap: 16px 24px; }
+.dnad-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.3fr) minmax(0, 1fr); grid-template-areas: "left field right" "left key right" "left readouts right" "left atomic right"; align-items: start; gap: 16px 24px; }
 .dnad-controls-left { grid-area: left; }
 .dnad-controls-right { grid-area: right; }
 .dnad-controls { display: flex; flex-direction: column; gap: 17px; min-width: 0; }
@@ -46,6 +46,7 @@
 .dnad-species select { width: 100%; min-width: 0; min-height: 36px; padding: 6px; border: 1px solid var(--dnad-rule); border-radius: 4px; background: var(--dnad-surface); font-size: 12px; }
 .dnad-controls .dnad-species-note { margin-top: 8px; font-size: 11px; line-height: 1.5; color: color-mix(in oklch, var(--dnad-ink) 78%, var(--dnad-surface)); }
 .dnad-field { grid-area: field; min-width: 0; }
+.dnad-field-key { grid-area: key; min-width: 0; }
 .dnad-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 7px; }
 .dnad-brushes, .dnad-view-actions { display: flex; align-items: center; gap: 3px; }
 .dnad-toolbar button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; min-height: 44px; padding: 7px; border: 0; border-bottom: 2px solid transparent; border-radius: 0; font-size: 12px; }
@@ -85,11 +86,11 @@
 .dnad-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
 .dnad-error { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 20px; color: var(--dnad-accent); font-size: 14px; }
 @container dna-damage (max-width: 900px) {
-  .dnad-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "field field" "readouts readouts" "atomic atomic" "left right"; }
+  .dnad-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "field field" "left right" "key key" "readouts readouts" "atomic atomic"; }
   .dnad-stage { height: 400px; }
 }
 @container dna-damage (max-width: 600px) {
-  .dnad-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "field" "readouts" "atomic" "left" "right"; gap: 20px; }
+  .dnad-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "field" "left" "right" "key" "readouts" "atomic"; gap: 20px; }
   .dnad-stage { height: 360px; }
   .dnad-toolbar button { padding-inline: 6px; }
   .dnad-toolbar button svg { width: 14px; height: 14px; }

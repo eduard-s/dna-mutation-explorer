@@ -27,6 +27,8 @@ Give each factor a native control and a relative value.
 Show species context without a resistance score.
 Keep pause and reset visible.
 Put controls in document flow on phones.
+Put all controls directly below the field on narrow embeds.
+Put the legend, readouts, and molecular explanation after all controls.
 Preserve normal document scroll and pinch zoom.
 
 Give dimers, strand breaks, and oxidized bases different states.

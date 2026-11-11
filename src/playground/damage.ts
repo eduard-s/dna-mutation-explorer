@@ -10,6 +10,7 @@ export const SPECIES_PROFILES: readonly SpeciesProfile[] = Object.freeze([
 
 export const DEFAULT_DAMAGE_EXPOSURES: Readonly<DamageExposures> = Object.freeze({ uv: .25, xray: 0, heat: .12, oxidants: .15, electric: 0 });
 export const DEFAULT_DNA_PROTECTORS: Readonly<DnaProtectors> = Object.freeze({ antioxidants: .1, uvFilter: 0, xrayShield: 0, repair: .35, repairLight: 0 });
+export const MAX_EXPOSURE_PARTICLES_PER_SECOND = { uv: 3, xray: 3, oxidants: 4 } as const;
 
 const clamp = (value: number, low = 0, high = 1) => Math.max(low, Math.min(high, value));
 const profile = (world: DamageWorld) => SPECIES_PROFILES.find(item => item.id === world.species)!;
@@ -360,7 +361,7 @@ export function stepDamageLab(world: DamageWorld, elapsed: number): void {
   }
   stepDnaPlayground(world.dna, dt);
   for (const kind of ["uv", "xray", "oxidants"] as const) {
-    world.budgets[kind] += dt * world.exposures[kind] * (kind === "oxidants" ? 4 : 3);
+    world.budgets[kind] += dt * world.exposures[kind] * MAX_EXPOSURE_PARTICLES_PER_SECOND[kind];
     while (world.budgets[kind] >= 1) { world.budgets[kind] -= 1; emitExposure(world, kind); }
   }
   stepParticles(world, dt);

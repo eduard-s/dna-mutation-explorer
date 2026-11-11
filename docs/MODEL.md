@@ -102,8 +102,8 @@ It is not a count of absorbed photons or independent physical breaks.
 Electron excitation, ejection, clouds, and reaction paths are schematic.
 They are not literal electron orbits or quantum calculations.
 Motion, time, geometry, exposure levels, and protection levels use relative scales.
-The interface shows control levels as relative percentages.
-Those percentages do not describe damage, health risk, or survival.
+The interface shows the scheduled UV, X-ray, and oxidant emissions in simulated particles per second.
+It shows other strengths on a 0–1 model scale, with direction for the electric field.
 The lab does not calculate physical doses, reaction yields, survival, health risk, or clinical effects.
 
 The lab omits spectral differences within UV, thermal chemical degradation, electrochemistry, and detailed radiation transport.

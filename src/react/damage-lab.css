@@ -37,7 +37,6 @@
 .dnad-range input[type="range"]::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; margin-top: -6px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
 .dnad-range input[type="range"]::-moz-range-thumb { width: 20px; height: 20px; border: 0; border-radius: 50%; background: var(--dnad-accent); }
 .dnad-range output { grid-column: 2; grid-row: 1; text-align: right; font: 12px/1.5 Arial, Helvetica, sans-serif; color: color-mix(in oklch, var(--dnad-ink) 80%, transparent); font-variant-numeric: tabular-nums; }
-.dnad-range output > span { margin-left: 1px; font-size: 9px; }
 .dnad-repair-switch { display: flex; align-items: center; gap: 12px; min-height: 37px; }
 .dnad-repair-switch > button { flex: 1; }
 .dnad-repair-switch > label { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; }

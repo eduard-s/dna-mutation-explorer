@@ -107,8 +107,8 @@ The setters accept partial objects.
 Finite levels are bounded to 0–1, except `electric`, which is bounded to −1–1.
 The setters ignore nonfinite or nonnumeric fields.
 These values do not represent physical units or calibrated biological probabilities.
-The React controls display 0–100% relative values, or −100%–100% for the field.
-Those percentages do not represent damage or health risk.
+The React controls show simulated particles per second for UV, X-rays, and oxidants.
+Other strengths use the 0–1 model scale, and the electric field also shows its direction.
 
 | Exposure | Default |
 | --- | --- |

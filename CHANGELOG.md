@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.4
+
+- Show simulated particle rates for UV, X-rays, and oxidants.
+- Describe heat and protection levels and show electric field direction.
+- Announce the displayed settings when a slider has keyboard focus.
+
 ## 0.4.1
 
 - Move the npm package to `@esmirnov.ai/dna-mutation-explorer`.

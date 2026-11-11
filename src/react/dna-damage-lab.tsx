@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import { beginDnaGrab, duplexGeometry, moveDnaPointer, nearestDnaBase, releaseDnaGrab } from "../playground/engine.js";
-import { DEFAULT_DAMAGE_EXPOSURES, DEFAULT_DNA_PROTECTORS, SPECIES_PROFILES, createDamageLab, getDamageMetrics,
+import { DEFAULT_DAMAGE_EXPOSURES, DEFAULT_DNA_PROTECTORS, MAX_EXPOSURE_PARTICLES_PER_SECOND, SPECIES_PROFILES, createDamageLab, getDamageMetrics,
   pulseDamage, repairDamageAt, resizeDamageLab, setDamageExposures, setDamageSpecies, setDnaProtectors,
   stepDamageLab, takeDamageSnapshot } from "../playground/damage.js";
 import { DEFAULT_DNA_RENDER_THEME, renderDnaDamage, type DnaRenderTheme } from "../playground/render.js";
@@ -47,18 +47,37 @@ function DamageLegend() {
   </div>;
 }
 
-function Range({ id, label, value, signed = false, disabled = false, hint, active = false, onSelect, onChange }: {
+function describeLevel(value: number, signed: boolean, maxParticleRate?: number, zeroLabel = "Off") {
+  if (value === 0) return { text: zeroLabel, announcement: zeroLabel };
+  if (maxParticleRate !== undefined) {
+    const rate = (value * maxParticleRate).toFixed(2);
+    return { text: `${rate} particles/s`, announcement: `${rate} simulated particles per second` };
+  }
+
+  const strength = Math.abs(value).toFixed(2);
+  if (signed) {
+    const direction = value < 0 ? "Left" : "Right";
+    return { text: `${direction} · ${strength}`, announcement: `Field points ${direction.toLowerCase()}, strength ${strength} on the model scale` };
+  }
+
+  const level = value === 1 ? "Max" : value >= .67 ? "High" : value >= .34 ? "Medium" : "Low";
+  return { text: `${level} · ${strength}`, announcement: `${level}, ${strength} on the model scale` };
+}
+
+function Range({ id, label, value, signed = false, disabled = false, hint, active = false, maxParticleRate, zeroLabel, onSelect, onChange }: {
   id: string; label: string; value: number; signed?: boolean; disabled?: boolean; hint: string; active?: boolean;
+  maxParticleRate?: number; zeroLabel?: string;
   onSelect: () => void; onChange: (value: number) => void;
 }) {
-  const shown = Math.round(value * 100);
+  const shown = Math.round(value * 100) / 100;
+  const level = describeLevel(shown, signed, maxParticleRate, zeroLabel);
   return <div className="dnad-range">
     <button type="button" className="dnad-factor" aria-pressed={active} title={hint} onClick={onSelect}>{label}</button>
-    <input id={id} type="range" min={signed ? -100 : 0} max={100} step={1} value={shown} disabled={disabled}
-      aria-label={label} aria-describedby={`${id}-hint`} aria-valuetext={`${shown} percent, relative setting`} title={hint}
-      style={{ "--dnad-progress": `${signed ? (shown + 100) / 2 : shown}%` } as CSSProperties}
-      onChange={event => onChange(Number(event.target.value) / 100)} />
-    <output htmlFor={id}>{signed && shown > 0 ? "+" : ""}{shown}<span>%</span></output>
+    <input id={id} type="range" min={signed ? -1 : 0} max={1} step={.01} value={shown} disabled={disabled}
+      aria-label={label} aria-describedby={`${id}-hint`} aria-valuetext={level.announcement} title={hint}
+      style={{ "--dnad-progress": `${(signed ? (shown + 1) / 2 : shown) * 100}%` } as CSSProperties}
+      onChange={event => onChange(event.currentTarget.valueAsNumber)} />
+    <output htmlFor={id}>{level.text}</output>
     <span className="dnad-sr-only" id={`${id}-hint`}>{hint}</span>
   </div>;
 }
@@ -218,6 +237,8 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
   const release = () => { if (world.current) { releaseDnaGrab(world.current.dna); world.current.dna.pointer.active = false; } gesture.current = { down: false, lastKey: "", lastTime: 0 }; if (canvas.current) canvas.current.dataset.dragging = "false"; };
 
   const range = (key: keyof DamageExposures, label: string, hint: string) => <Range id={`${id}-${key}`} label={label} value={exposures[key]} signed={key === "electric"}
+    maxParticleRate={key === "uv" || key === "xray" || key === "oxidants" ? MAX_EXPOSURE_PARTICLES_PER_SECOND[key] : undefined}
+    zeroLabel={key === "heat" ? "Baseline" : undefined}
     hint={hint} active={effect === key} disabled={!ready} onSelect={() => selectEffect(key)} onChange={value => expose(key, value)} />;
   const protector = (key: keyof DnaProtectors, label: string, hint: string, mechanism: DamageEffect, disabled = false) => <Range id={`${id}-${key}`} label={label} value={protectors[key]}
     hint={hint} active={effect === mechanism} disabled={!ready || disabled} onSelect={() => selectEffect(mechanism)} onChange={value => protect(key, value, mechanism)} />;
@@ -276,7 +297,7 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
           {range("uv", "UV light", "UV can form a bond between nearby T or C bases on the same strand.")}
           {range("xray", "X-rays", "Ionizing radiation can damage bases and break the DNA backbone.")}</fieldset>
         <fieldset><legend>Heat</legend>{range("heat", "Thermal motion", "Heat increases motion and opens base pairs. An open pair is not a backbone break.")}</fieldset>
-        <fieldset><legend>Electric field</legend>{range("electric", "Field strength", "The signed field moves negatively charged DNA against the field direction.")}</fieldset>
+        <fieldset><legend>Electric field</legend>{range("electric", "Field strength", "The field points left or right. Negatively charged DNA moves in the opposite direction.")}</fieldset>
       </div>
 
       <div className="dnad-controls dnad-controls-right">
@@ -308,6 +329,6 @@ export function DnaDamageLab({ sequence, seed, initialSpecies = "ecoli", initial
         <p>{effectDescriptions[effect]}</p>
         <ol className="dnad-atomic-stages">{ATOMIC_EXPLANATIONS[effect].stages.map((stage, index) => <li key={stage}><span>{index + 1}</span>{stage}</li>)}</ol></section>
     </div>
-    <p className="dnad-model-note">Illustrative exposure and repair settings. No dose or health prediction.</p>
+    <p className="dnad-model-note">Particle rates count simulated emissions. Other strengths use a 0–1 model scale. Real doses and health risk are outside the model.</p>
   </section>;
 }

@@ -1,17 +1,15 @@
 # Design
 
 The interface uses the existing esmirnov.ai visual system.
-The page surface is pale sage #DFE5DC.
-The text is green-charcoal #303832.
-The accent is dark clay #785448.
-Secondary surfaces use #EFF2ED.
+The page surface is cool blue #edf3fb, with pale aqua and lilac around the sample.
+Use navy #17243a for text, cobalt #1557df for actions, and cool white #fbfdff for panels.
 
-Use Arial for text and headings.
-Use Courier New for sequences, metadata, and controls.
+Use a system sans serif for labels and headings.
+Use Courier New for sequences.
 Keep the interface light for a reader at a desk in daylight.
 
 Use thin rules to separate the canvas, controls, and readouts.
-Use no cards, shadows, or gradients.
+Group related controls in rounded panels. Keep the molecular field distinct.
 Put each slider below its label and value.
 Use the full control width, an 8-pixel track, and a 20-pixel thumb.
 Give each control a target of at least 44 pixels.

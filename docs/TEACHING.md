@@ -264,7 +264,7 @@ No tool needs a drag action.
 The chain preview shows the first 24 symbols, including a stop symbol when present.
 The full amino-acid count stays visible.
 The sequence comparison and export include the rest.
-Clay marks a different symbol at the same position.
+Pink marks a different symbol at the same position.
 This comparison does not align protein sequences.
 
 Open "Edit a custom sequence or exact positions" for manual controls.

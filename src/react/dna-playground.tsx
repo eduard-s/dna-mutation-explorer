@@ -337,7 +337,7 @@ export function DnaPlayground({ sequence, seed, className = "", style, onChange 
       <button type="button" disabled={!ready || !copyComplete} onClick={() => actions.current.generation()}>Next generation</button>
     </div>
     <div className="dnap-readouts"><div className="dnap-selected"><span>{ready ? selection : "Select a base pair"}</span>
-      <Info label="selected pair" text="A pairs with T. C pairs with G. A mismatch in the new copy has a clay ring." /></div>
+      <Info label="selected pair" text="A pairs with T. C pairs with G. A mismatch in the new copy has a ring and a cross between the bases." /></div>
       <dl><div><dt>Copied bases<Info label="copied bases" text="The new strand grows one base at a time. The new copy combines an original strand with a new strand." /></dt><dd>{ready ? `${metrics.copied} / ${metrics.basePairs}` : "..."}</dd></div>
         <div><dt>Mismatches<Info label="mismatches" text="A mismatch has the wrong partner in the new copy. Repair copy restores the partner from the original strand." /></dt><dd>{ready ? metrics.mismatches : "..."}</dd></div>
         <div><dt>Sequence changes<Info label="sequence changes" text="These source bases differ from the original sample. The count includes your source edits and changes from a tracked descendant." /></dt><dd>{ready ? metrics.changes : "..."}</dd></div>

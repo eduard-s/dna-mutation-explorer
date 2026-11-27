@@ -132,7 +132,7 @@ export function DirectPlayground({ analysis, selected, consequence, onEdit }: {
     {analysis && <div className="dme-live-proteins">
       <ProteinChain translation={analysis.reference} reference={analysis.reference} label="Original protein" />
       <ProteinChain translation={analysis.edited} reference={analysis.reference} label="Your protein" edited />
-      <p>Letters identify amino acids. STOP ends the chain. Clay marks a different symbol at the same position.</p>
+      <p>Letters identify amino acids. STOP ends the chain. Pink marks a different symbol at the same position.</p>
     </div>}
   </section>;
 }

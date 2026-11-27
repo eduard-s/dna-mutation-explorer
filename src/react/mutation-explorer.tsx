@@ -402,7 +402,7 @@ export function MutationExplorer({ sequence: controlledSequence, defaultSequence
     </details>
     <div className="dme-comparison" ref={compare}>
       <div className="dme-comparison-heading"><h2>Sequence comparison</h2><span>Standard genetic code · frame starts at base 1</span></div>
-      <p className="dme-comparison-cue">Select a reference base to move the edit. Green marks the selected codon. Clay marks changed sequence.</p>
+      <p className="dme-comparison-cue">Select a reference base to move the edit. Blue marks the selected codon. Pink marks a change in the edited sequence.</p>
       {analysis ? <>
         <DnaHelix sequence={analysis.reference.dna} selected={selected} />
         <div className="dme-codon-explanation"><h3>Follow selected codon {selectedCodonIndex + 1}<Help term="codon">A codon is a group of three RNA bases. Most codons encode one amino acid. Three codons give stop signals.</Help></h3>

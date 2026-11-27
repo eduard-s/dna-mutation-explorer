@@ -12,17 +12,17 @@ export interface DnaRenderTheme {
 }
 
 export const DEFAULT_DNA_RENDER_THEME: Readonly<DnaRenderTheme> = Object.freeze({
-  surface: "#DFE5DC", paper: "#EFF2ED", ink: "#303832", accent: "#785448", sage: "#6F897C", clay: "#A67769"
+  surface: "#edf3fb", paper: "#fbfdff", ink: "#17243a", accent: "#1557df", sage: "#337e90", clay: "#a15570"
 });
 
 type Point = { x: number; y: number; z: number };
 type Strand = "a" | "b";
-const colors: Record<DnaBase, string> = { A: "#B79671", T: "#90A185", C: "#829D9F", G: "#B58D87" };
+const colors: Record<DnaBase, string> = { A: "#c6b1eb", T: "#89c7b4", C: "#83b8df", G: "#e5abc1" };
 const sprites = new Map<string, HTMLCanvasElement>();
 const mix = (a: Point, b: Point, t: number): Point => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t, z: a.z + (b.z - a.z) * t });
 
 function shade(color: string, multiplier: number) {
-  if (!/^#[\da-f]{6}$/i.test(color)) return multiplier < 1 ? "#526357" : "#E7ECE1";
+  if (!/^#[\da-f]{6}$/i.test(color)) return multiplier < 1 ? "#536481" : "#e8edf8";
   return `rgb(${[1, 3, 5].map(start => Math.min(255, Math.round(parseInt(color.slice(start, start + 2), 16) * multiplier))).join(",")})`;
 }
 
@@ -34,7 +34,7 @@ function atomSprite(ctx: CanvasRenderingContext2D, color: string) {
   canvas.height = 56;
   const paint = canvas.getContext("2d")!;
   const gradient = paint.createRadialGradient(19, 15, 1, 29, 29, 24);
-  gradient.addColorStop(0, "#EFF2E8");
+  gradient.addColorStop(0, "#f6fbff");
   gradient.addColorStop(.24, color);
   gradient.addColorStop(.75, shade(color, .86));
   gradient.addColorStop(1, shade(color, .6));
@@ -45,7 +45,7 @@ function atomSprite(ctx: CanvasRenderingContext2D, color: string) {
   paint.strokeStyle = shade(color, .67);
   paint.lineWidth = .8;
   paint.stroke();
-  paint.fillStyle = "rgba(241,246,234,.48)";
+  paint.fillStyle = "rgba(246,250,255,.48)";
   paint.beginPath();
   paint.ellipse(19, 16, 5, 2.7, -.6, 0, Math.PI * 2);
   paint.fill();
@@ -74,7 +74,7 @@ function baseHalf(ctx: CanvasRenderingContext2D, endpoint: Point, inside: Point,
   ctx.moveTo(endpoint.x, endpoint.y);
   ctx.lineTo(inside.x, inside.y);
   ctx.stroke();
-  atom(ctx, mix(endpoint, inside, .16), 3.6 * depth, "#A7B49E");
+  atom(ctx, mix(endpoint, inside, .16), 3.6 * depth, "#92acd3");
   if (!label) return;
   const radius = selected ? 9.2 : 7.7;
   ctx.fillStyle = colors[letter];
@@ -112,7 +112,7 @@ function pair(ctx: CanvasRenderingContext2D, geometry: DnaGeometry, selected: bo
   baseHalf(ctx, a, leftInside, geometry.base, labels, selected, theme);
   baseHalf(ctx, b, rightInside, geometry.partner, labels, selected, theme);
   if (open < .45) {
-    ctx.strokeStyle = geometry.mismatch ? theme.accent : "#7F8B7A";
+    ctx.strokeStyle = geometry.mismatch ? theme.accent : "#778ca7";
     ctx.lineWidth = geometry.mismatch ? 1.35 : .8;
     ctx.setLineDash(geometry.mismatch ? [3, 4] : [1, 2.8]);
     ctx.beginPath();
@@ -148,7 +148,7 @@ function changeMarker(ctx: CanvasRenderingContext2D, geometry: DnaGeometry, them
 
 function railColor(kind: DuplexKind, strand: Strand, theme: DnaRenderTheme) {
   if (kind === "daughter") return strand === "a" ? theme.clay : theme.sage;
-  return strand === "a" ? theme.sage : "#809697";
+  return strand === "a" ? theme.sage : "#7862a8";
 }
 
 function rails(ctx: CanvasRenderingContext2D, geometry: DnaGeometry[], kind: DuplexKind, front: boolean, theme: DnaRenderTheme,
@@ -166,12 +166,12 @@ function rails(ctx: CanvasRenderingContext2D, geometry: DnaGeometry[], kind: Dup
       ctx.strokeStyle = color;
       ctx.lineWidth = front ? 4.2 : 2.6;
       ctx.stroke();
-      ctx.strokeStyle = "#E7EDE0";
+      ctx.strokeStyle = "#ecf3fd";
       ctx.globalAlpha *= .6;
       ctx.lineWidth = .7;
       ctx.stroke();
       ctx.globalAlpha = (front ? .92 : .43) * opacity;
-      atom(ctx, mix(a, b, .5), front ? 3.3 : 2.6, strand === "a" ? "#A9B79F" : "#B7AA96");
+      atom(ctx, mix(a, b, .5), front ? 3.3 : 2.6, strand === "a" ? "#9bc0d8" : "#b3a0cf");
     }
     for (let index = firstIndex; index < geometry.length; index++) {
       const point = at(index);

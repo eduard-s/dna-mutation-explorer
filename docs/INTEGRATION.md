@@ -92,12 +92,12 @@ Set the lab CSS properties on that class.
 
 | Property | Default | Role |
 | --- | --- | --- |
-| `--dnad-surface` | `#dfe5dc` | Main surface color. |
-| `--dnad-paper` | `#eff2ed` | Light surface color. |
-| `--dnad-ink` | `#303832` | Main text and strand color. |
-| `--dnad-accent` | `#785448` | Focus and exposure color. |
-| `--dnad-sage` | `#6f897c` | Protection color. |
-| `--dnad-clay` | `#a67769` | Lesion color. |
+| `--dnad-surface` | `#edf3fb` | Main surface color. |
+| `--dnad-paper` | `#fbfdff` | Light surface color. |
+| `--dnad-ink` | `#17243a` | Main text and strand color. |
+| `--dnad-accent` | `#1557df` | Focus and exposure color. |
+| `--dnad-sage` | `#337e90` | Protection color. |
+| `--dnad-clay` | `#a15570` | Lesion color. |
 | `--dnad-rule` | A 24% ink mix | Rule and control border color. |
 
 The canvases are transparent.
@@ -175,12 +175,12 @@ Set the playground CSS properties on that class.
 
 | Property | Default | Role |
 | --- | --- | --- |
-| `--dnap-surface` | `#dfe5dc` | Main surface color. |
-| `--dnap-paper` | `#eff2ed` | Light surface color. |
-| `--dnap-ink` | `#303832` | Main text and strand color. |
-| `--dnap-accent` | `#785448` | Focus and selection color. |
-| `--dnap-sage` | `#6f897c` | New-strand color. |
-| `--dnap-clay` | `#a67769` | Error and change color. |
+| `--dnap-surface` | `#edf3fb` | Main surface color. |
+| `--dnap-paper` | `#fbfdff` | Light surface color. |
+| `--dnap-ink` | `#17243a` | Main text and strand color. |
+| `--dnap-accent` | `#1557df` | Focus and selection color. |
+| `--dnap-sage` | `#337e90` | New-strand color. |
+| `--dnap-clay` | `#a15570` | Error and change color. |
 
 The canvas is transparent.
 The component reads those properties for its canvas theme.
@@ -270,15 +270,15 @@ Set the CSS properties on that class.
 
 | Property | Default | Role |
 | --- | --- | --- |
-| `--dme-surface` | `#dfe5dc` | Main surface color. |
-| `--dme-paper` | `#eff2ed` | Input surface color. |
-| `--dme-ink` | `#303832` | Main text color. |
-| `--dme-muted` | `#5d695f` | Secondary text color. |
-| `--dme-accent` | `#785448` | Accent and focus color. |
-| `--dme-sage` | `#52745f` | Secondary sequence color. |
-| `--dme-rule` | `#b8c3b5` | Rule and control border color. |
-| `--dme-changed` | `#e7cbbd` | Changed-codon background. |
-| `--dme-selected` | `#d0dccb` | Selected-codon background. |
+| `--dme-surface` | `#edf3fb` | Main surface color. |
+| `--dme-paper` | `#fbfdff` | Input surface color. |
+| `--dme-ink` | `#17243a` | Main text color. |
+| `--dme-muted` | `#4e607a` | Secondary text color. |
+| `--dme-accent` | `#1557df` | Accent and focus color. |
+| `--dme-sage` | `#276c80` | Secondary sequence color. |
+| `--dme-rule` | `#c6d2e3` | Rule and control border color. |
+| `--dme-changed` | `#f6dbe4` | Changed-codon background. |
+| `--dme-selected` | `#dce8ff` | Selected-codon background. |
 
 The component root has a transparent background.
 The stylesheet prefixes component classes with `dme-`.

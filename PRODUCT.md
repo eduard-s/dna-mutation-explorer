@@ -42,7 +42,7 @@ Do not infer disease risk, protein function, protein structure, or gene expressi
 Identify the example sequence as synthetic.
 Keep all sequence data in the browser.
 
-Use Eduard's established sage and clay palette.
+Use the same cool white and cobalt palette as the other labs on esmirnov.ai.
 Use a small set of native controls and thin rules.
 Use text and color to identify exposures, lesions, protection, and repair.
 Keep the task visible on phones.

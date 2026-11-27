@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.5
+
+- Refresh the React labs, molecular colors, sequence editor and standalone demo with the new esmirnov.ai palette.
+
 ## 0.4.4
 
 - Show simulated particle rates for UV, X-rays, and oxidants.

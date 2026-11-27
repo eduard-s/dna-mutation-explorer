@@ -19,7 +19,7 @@ const lerp = (a: number, b: number, t: number) => a + (b - a) * clamp(t);
 
 function text(ctx: CanvasRenderingContext2D, value: string, x: number, y: number, color: string, size = 11, align: CanvasTextAlign = "center") {
   ctx.fillStyle = color;
-  ctx.font = `${size}px Arial, Helvetica, sans-serif`;
+  ctx.font = `${size}px system-ui, -apple-system, "Segoe UI", sans-serif`;
   ctx.textAlign = align;
   ctx.textBaseline = "middle";
   const available = ctx.canvas.width / Math.max(.01, ctx.getTransform().a) - 20;
@@ -40,10 +40,10 @@ function bond(ctx: CanvasRenderingContext2D, a: Point, b: Point, color: string, 
 }
 function atom(ctx: CanvasRenderingContext2D, p: Point, symbol: string, color: string, radius = 9) {
   const glow = ctx.createRadialGradient(p.x - radius * .3, p.y - radius * .4, 1, p.x, p.y, radius);
-  glow.addColorStop(0, "#EFF2ED"); glow.addColorStop(.45, color); glow.addColorStop(1, color);
+  glow.addColorStop(0, "#fbfdff"); glow.addColorStop(.45, color); glow.addColorStop(1, color);
   ctx.fillStyle = glow; ctx.beginPath(); ctx.arc(p.x, p.y, radius, 0, Math.PI * 2); ctx.fill();
-  ctx.strokeStyle = "#536356"; ctx.lineWidth = .6; ctx.stroke();
-  text(ctx, symbol, p.x, p.y + .5, "#303832", Math.min(11, radius + 2));
+  ctx.strokeStyle = "#536481"; ctx.lineWidth = .6; ctx.stroke();
+  text(ctx, symbol, p.x, p.y + .5, "#17243a", Math.min(11, radius + 2));
 }
 function cloud(ctx: CanvasRenderingContext2D, x: number, y: number, radius: number, color: string, excited = 0) {
   ctx.save(); ctx.fillStyle = color;
@@ -86,7 +86,7 @@ function thymine(ctx: CanvasRenderingContext2D, cx: number, cy: number, radius: 
     const p = points[index]; const o = { x: cx + (p.x - cx) * 1.68, y: cy + (p.y - cy) * 1.68 };
     bond(ctx, p, o, theme.ink, .8, false, true); atom(ctx, o, "O", theme.clay, 7);
   }
-  points.forEach((p, index) => atom(ctx, p, symbols[index], symbols[index] === "N" ? "#829D9F" : "#AAB49E", 6));
+  points.forEach((p, index) => atom(ctx, p, symbols[index], symbols[index] === "N" ? "#83b8df" : "#b2bfd2", 6));
   bond(ctx, points[1], { x: points[1].x, y: points[1].y - 17 }, theme.ink, 1);
   text(ctx, "CH₃", points[1].x, points[1].y - 23, theme.ink, 9);
   text(ctx, "T base", cx, cy + radius + 27, theme.ink, 11);
@@ -130,7 +130,7 @@ function tinyBackbone(ctx: CanvasRenderingContext2D, x: number, y: number, theme
   for (let i = 0; i < elements.length; i++) {
     const p = { x: x + i * 17, y: y + Math.sin(i) * 9 };
     if (i && !(broken && i === 3)) bond(ctx, { x: x + (i - 1) * 17, y: y + Math.sin(i - 1) * 9 }, p, theme.ink, 3);
-    atom(ctx, p, elements[i], elements[i] === "P" ? theme.sage : elements[i] === "O" ? theme.clay : "#AAB49E", 7);
+    atom(ctx, p, elements[i], elements[i] === "P" ? theme.sage : elements[i] === "O" ? theme.clay : "#b2bfd2", 7);
   }
 }
 function drawXray(ctx: CanvasRenderingContext2D, w: number, h: number, p: number, active: boolean, shielded: boolean, scavenged: boolean, theme: DnaRenderTheme) {
@@ -159,9 +159,9 @@ function drawHeat(ctx: CanvasRenderingContext2D, w: number, h: number, time: num
   const wobble = (offset: number) => Math.sin(time * (5 + amount * 12) + offset) * amount * 7;
   for (let row = 0; row < 3; row++) {
     const y = h * (.22 + row * .21), left = { x: w * .5 - separation + wobble(row), y }, right = { x: w * .5 + separation + wobble(row + 2), y: y + wobble(row + 3) };
-    atom(ctx, left, row % 2 ? "N" : "O", row % 2 ? "#829D9F" : theme.clay, 12);
+    atom(ctx, left, row % 2 ? "N" : "O", row % 2 ? "#83b8df" : theme.clay, 12);
     const hydrogen = { x: left.x + 21, y: left.y }; bond(ctx, left, hydrogen, theme.ink, 2); atom(ctx, hydrogen, "H", theme.paper, 7);
-    atom(ctx, right, row % 2 ? "O" : "N", row % 2 ? theme.clay : "#829D9F", 12);
+    atom(ctx, right, row % 2 ? "O" : "N", row % 2 ? theme.clay : "#83b8df", 12);
     ctx.globalAlpha = 1 - amount * .9; bond(ctx, hydrogen, right, theme.sage, 1, true); ctx.globalAlpha = 1;
     cloud(ctx, left.x, left.y, 30, theme.sage); cloud(ctx, right.x, right.y, 30, theme.sage);
   }
@@ -171,12 +171,12 @@ function drawOxidation(ctx: CanvasRenderingContext2D, w: number, h: number, p: n
   const x = w * .43, y = h * .48, r = w < 420 ? 23 : 29;
   const ring = Array.from({ length: 6 }, (_, i) => ({ x: x + Math.sin(i * Math.PI / 3) * r, y: y - Math.cos(i * Math.PI / 3) * r }));
   const symbols = ["C", "C", "C", "N", "C", "N"];
-  ring.forEach((point, i) => { bond(ctx, point, ring[(i + 1) % 6], theme.ink, 1, false, i === 1 || i === 3); atom(ctx, point, symbols[i], symbols[i] === "N" ? "#829D9F" : "#AAB49E", 6); });
+  ring.forEach((point, i) => { bond(ctx, point, ring[(i + 1) % 6], theme.ink, 1, false, i === 1 || i === 3); atom(ctx, point, symbols[i], symbols[i] === "N" ? "#83b8df" : "#b2bfd2", 6); });
   const five = [ring[2], { x: x + r * 1.65, y: y + r * .8 }, { x: x + r * 2.25, y }, { x: x + r * 1.65, y: y - r * .8 }, ring[1]];
     five.forEach((point, i) => { if (i < 4) bond(ctx, point, five[i + 1], theme.ink, 1, false, i === 2 && !(active && p > .7 && !scavenged));
-    if (i > 0 && i < 4) atom(ctx, point, i === 2 ? "C" : "N", i === 2 ? "#AAB49E" : "#829D9F", 6); });
+    if (i > 0 && i < 4) atom(ctx, point, i === 2 ? "C" : "N", i === 2 ? "#b2bfd2" : "#83b8df", 6); });
   const oxygen6 = { x, y: y - r * 1.7 }; bond(ctx, ring[0], oxygen6, theme.ink, 1, false, true); atom(ctx, oxygen6, "O", theme.clay, 7);
-  const amino = { x: ring[4].x - 23, y: ring[4].y + 8 }; bond(ctx, ring[4], amino, theme.ink, 1); atom(ctx, amino, "N", "#829D9F", 6); text(ctx, "H₂", amino.x - 12, amino.y + 11, theme.ink, 8);
+  const amino = { x: ring[4].x - 23, y: ring[4].y + 8 }; bond(ctx, ring[4], amino, theme.ink, 1); atom(ctx, amino, "N", "#83b8df", 6); text(ctx, "H₂", amino.x - 12, amino.y + 11, theme.ink, 8);
   cloud(ctx, x + r * .5, y, 54, theme.sage);
   text(ctx, "Guanine · selected atoms", x + r * .5, y + 65, theme.ink);
   const target = five[2];
@@ -226,7 +226,7 @@ function drawRepair(ctx: CanvasRenderingContext2D, w: number, h: number, p: numb
     if (i) { bond(ctx, { x: x - 34, y }, { x, y }, theme.ink, 2); bond(ctx, { x: x - 34, y: y + 44 }, { x, y: y + 44 }, theme.ink, 2); }
     const removed = affected && active && p > .35 && p < .72;
     if (!removed) atom(ctx, { x, y }, affected && (!active || p < .35) ? "!" : "C", affected && (!active || p < .35) ? theme.clay : theme.sage, 10);
-    atom(ctx, { x, y: y + 44 }, "G", "#B58D87", 9);
+    atom(ctx, { x, y: y + 44 }, "G", "#e5abc1", 9);
     bond(ctx, { x, y: y + 10 }, { x, y: y + 34 }, theme.sage, 1, true);
   }
   const ex = start + 68;
